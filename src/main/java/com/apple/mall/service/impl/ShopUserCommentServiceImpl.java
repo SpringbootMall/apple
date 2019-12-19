@@ -95,9 +95,7 @@ public class ShopUserCommentServiceImpl implements ShopUserCommentService {
 
     @Override
     public int deleteByOrderNo(Long orderNo) {
-        List<Long> ids = new ArrayList<>();
-        ids.add(orderNo);
-        return shopUserCommentMapper.deleteBatch(ids);
+        return shopUserCommentMapper.deleteByOrderNo(orderNo);
     }
 
     @Override

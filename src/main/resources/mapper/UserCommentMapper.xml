@@ -74,10 +74,15 @@
 
     <update id="deleteBatch">
         update user_comment
-        set comment_is_deleted=1 where orderNo in
+        set comment_is_deleted=1 where order_no in
         <foreach item="id" collection="list" open="(" separator="," close=")">
-            #{id}
+            #{id,jdbcType=BIGINT}
         </foreach>
+    </update>
+
+    <update id="deleteByOrderNo">
+        update user_comment
+        set comment_is_deleted=1 where order_no = #{orderNo,jdbcType=BIGINT}
     </update>
 
     <insert id="insert" parameterType="com.apple.mall.entity.ShopUserComment">

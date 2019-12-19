@@ -113,7 +113,10 @@ public class OrderController {
 
     @PostMapping("/shop-comment")
     @ResponseBody
-    public Result addUserComment(@RequestBody ShopUserComment shopUserComment){
+    public Result addUserComment(@RequestBody ShopUserComment shopUserComment,HttpSession httpSession){
+
+        UserVO user = (UserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        shopUserComment.setUserId(user.getUserId());
         System.out.println(shopUserComment.getOrderNo());
         String commentResult = shopUserCommentService.saveShopUserComment(shopUserComment);
         if (ServiceResultEnum.SUCCESS.getResult().equals(commentResult)) {
