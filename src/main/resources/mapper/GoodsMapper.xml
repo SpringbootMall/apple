@@ -375,13 +375,13 @@
 
     <select id="searchPage" resultMap="BaseResultMap">
         select * from goods_info
-        where goods_category like CONCAT('%',#{keyword},'%') or goods_intro like CONCAT('%',#{keyword},'%') or goods_detail_content like CONCAT('%',#{keyword},'%')
+        where goods_sell_status=0 and (goods_category like CONCAT('%',#{keyword},'%') or goods_intro like CONCAT('%',#{keyword},'%') or goods_detail_content like CONCAT('%',#{keyword},'%'))
     </select>
 
 
     <select id="findre" resultMap="BaseResultMap">
     select * from goods_info
-    where tag=#{tag}
+    where tag=#{tag}  and goods_sell_status=0
     </select>
 
     <select id="findgoods" resultMap="BaseResultMap">
