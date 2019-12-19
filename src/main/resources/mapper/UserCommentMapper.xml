@@ -46,6 +46,20 @@
         where user_id = #{userId,jdbcType=BIGINT} and comment_is_deleted = 0
     </select>
 
+    <select id="selectByGoodsId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_comment
+        where goods_id = #{goodsId,jdbcType=BIGINT} and comment_is_deleted = 0
+    </select>
+
+    <select id="selectByOrderNo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_comment
+        where order_no = #{orderNo,jdbcType=BIGINT} and comment_is_deleted = 0
+    </select>
+
     <select id="selectCountByUserId" resultType="int">
     select
     count(*)

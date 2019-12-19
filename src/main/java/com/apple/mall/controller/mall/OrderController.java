@@ -44,10 +44,12 @@ public class OrderController {
     public String orderDetailPage(HttpServletRequest request, @PathVariable("orderNo") String orderNo, HttpSession httpSession) {
         UserVO user = (UserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         OrderDetailVO orderDetailVO = newBeeMallOrderService.getOrderDetailByOrderNo(orderNo, user.getUserId());
+        List<ShopUserComment> userOrderComment = shopUserCommentService.getShopUserCommentByOrderNo(Long.valueOf(orderNo));
         if (orderDetailVO == null) {
             return "error/error_5xx";
         }
         request.setAttribute("orderDetailVO", orderDetailVO);
+        request.setAttribute("userOrderComment", userOrderComment);
         return "mall/order-detail";
     }
 
@@ -179,4 +181,13 @@ public class OrderController {
         }
     }
 
+
+    @DeleteMapping("/deleteComment/{orderNo}")
+    @ResponseBody
+    public Result deleteComment(@PathVariable("orderNo") Long orderNo){
+        int deleteCommentResult = shopUserCommentService.deleteByOrderNo(orderNo);
+        if (deleteCommentResult>0)
+            return ResultGenerator.genSuccessResult();
+        else return ResultGenerator.genFailResult("删除失败!");
+    }
 }

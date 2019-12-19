@@ -32,6 +32,15 @@ public interface ShopUserCommentService {
     ShopUserComment getShopUserCommentById(Long orderNo, Long goodsId);
 
     /**
+     * 通过订单获取评论详情
+     *
+     * @param orderNo
+     * @return
+     */
+    List<ShopUserComment> getShopUserCommentByOrderNo(Long orderNo);
+
+
+    /**
      * 删除评论
      *
      * @param orderNo
@@ -47,4 +56,19 @@ public interface ShopUserCommentService {
      * @return
      */
     List<ShopUserCommentVO> getMyShopComment(Long shopUserId);
+
+    /**
+     * 获取指定商品的评论数据
+     *
+     * @param goodsId
+     * @return
+     */
+    List<ShopUserComment> getGoodsCommentById(Long goodsId);
+
+    /**
+     * 删除评论
+     * @param orderNo
+     * @return
+     */
+    int deleteByOrderNo(Long orderNo);
 }

@@ -86,4 +86,21 @@ public class ShopUserCommentServiceImpl implements ShopUserCommentService {
         return shopUserCommentVOS;
     }
 
+    @Override
+    public List<ShopUserComment> getGoodsCommentById(Long goodsId) {
+        return shopUserCommentMapper.selectByGoodsId(goodsId);
+    }
+
+    @Override
+    public int deleteByOrderNo(Long orderNo) {
+        List<Long> ids = new ArrayList<>();
+        ids.add(orderNo);
+        return shopUserCommentMapper.deleteBatch(ids);
+    }
+
+    @Override
+    public List<ShopUserComment> getShopUserCommentByOrderNo(Long orderNo) {
+        return shopUserCommentMapper.selectByOrderNo(orderNo);
+    }
+
 }
