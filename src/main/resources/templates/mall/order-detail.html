@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mall/header::head-fragment('Apple商城-订单详情','order-detail')">
+</head>
+<link rel="stylesheet" th:href="@{/admin/plugins/sweetalert/sweetalert.css}"/>
+
+<body>
+<header th:replace="mall/header::header-fragment"></header>
+<!-- nav -->
+<nav th:replace="mall/header::nav-fragment"></nav>
+
+<!-- personal -->
+<div id="personal">
+    <div class="self-info center">
+
+        <!-- sidebar -->
+        <div th:replace="mall/personal-sidebar::sidebar-fragment"></div>
+
+        <div class="intro fr">
+            <div class="uc-box uc-main-box">
+                <div class="uc-content-box order-view-box">
+                    <div class="box-hd">
+                        <h1 class="title">订单详情
+                            <small>请谨防钓鱼链接或诈骗电话，<a href="##">了解更多&gt;</a>
+                            </small>
+                        </h1>
+                        <div class="more clearfix">
+                            <h2 class="subtitle">订单号：
+                                <th:block th:text="${orderDetailVO.orderNo}"></th:block>
+                                <span class="tag tag-subsidy"></span>
+                            </h2>
+                            <div class="actions">
+                                <input type="hidden" id="orderNoValue" th:value="${orderDetailVO.orderNo}">
+                                <th:block th:if="${orderDetailVO.orderStatus>0 and orderDetailVO.orderStatus<3}">
+                                    <a onclick="cancelOrder()"
+                                       class="btn btn-small btn-line-gray" title="取消订单">取消订单</a>
+                                </th:block>
+                                <th:block th:if="${orderDetailVO.orderStatus==0}">
+                                    <a onclick="payOrder()"
+                                       class="btn btn-small btn-primary" title="去支付">去支付</a>
+                                </th:block>
+                                <th:block th:if="${orderDetailVO.orderStatus==3}">
+                                    <a onclick="finishOrder()"
+                                       class="btn btn-small btn-primary" title="确认收货">确认收货</a>
+                                </th:block>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-bd">
+                        <div class="uc-order-item uc-order-item-pay">
+                            <div class="order-detail">
+
+                                <div class="order-summary">
+                                    <div class="order-status" th:text="${orderDetailVO.orderStatusString}">
+                                        newbee
+                                    </div>
+                                    <div class="order-desc">
+                                        <th:block th:if="${orderDetailVO.orderStatus==0}">请尽快完成支付哦~</th:block>
+                                        <th:block th:if="${orderDetailVO.orderStatus==1}">newbee商城订单确认中~</th:block>
+                                        <th:block th:if="${orderDetailVO.orderStatus==2}">newbee仓库正在紧急配货中~</th:block>
+                                        <th:block th:if="${orderDetailVO.orderStatus==3}">订单已出库正在快马加鞭向您奔来~</th:block>
+                                        <th:block th:if="${orderDetailVO.orderStatus==4}">交易成功，感谢您对newbee商城的支持~</th:block>
+                                        <th:block th:if="${orderDetailVO.orderStatus<0}">交易已关闭~</th:block>
+
+                                    </div>
+                                    <th:block th:if="${orderDetailVO.orderStatus>=0}">
+                                        <div class="order-progress">
+                                            <ol class="progress-list clearfix progress-list-5">
+                                                <th:block th:if="${orderDetailVO.orderStatus==0}">
+                                                    <li class="step step-active">
+                                                </th:block>
+                                                <th:block th:if="${orderDetailVO.orderStatus>0}">
+                                                    <li class="step step-first">
+                                                </th:block>
+                                                <div class="progress"><span class="text">下单</span></div>
+                                                <div class="info"
+                                                     th:text="${#dates.format(orderDetailVO.createTime, 'yyyy-MM-dd HH:mm:ss')}">
+                                                    02月07日
+                                                </div>
+                                                </li>
+                                                <th:block th:if="${orderDetailVO.orderStatus<1}">
+                                                    <li class="step">
+                                                </th:block>
+                                                <th:block th:if="${orderDetailVO.orderStatus==1}">
+                                                    <li class="step step-active">
+                                                </th:block>
+                                                <th:block th:if="${orderDetailVO.orderStatus>1}">
+                                                    <li class="step step-done">
+                                                </th:block>
+                                                <div class="progress"><span class="text">付款</span></div>
+                                                <div class="info"></div>
+                                                </li>
+                                                <th:block th:if="${orderDetailVO.orderStatus<2}">
+                                                    <li class="step">
+                                                </th:block>
+                                                <th:block th:if="${orderDetailVO.orderStatus==2}">
+                                                    <li class="step step-active">
+                                                </th:block>
+                                                <th:block th:if="${orderDetailVO.orderStatus>2}">
+                                                    <li class="step step-done">
+                                                </th:block>
+                                                <div class="progress"><span class="text">配货</span></div>
+                                                <div class="info"></div>
+                                                </li>
+                                                <th:block th:if="${orderDetailVO.orderStatus<3}">
+                                                    <li class="step">
+                                                </th:block>
+                                                <th:block th:if="${orderDetailVO.orderStatus==3}">
+                                                    <li class="step step-active">
+                                                </th:block>
+                                                <th:block th:if="${orderDetailVO.orderStatus>3}">
+                                                    <li class="step step-done">
+                                                </th:block>
+                                                <div class="progress"><span class="text">出库</span></div>
+                                                <div class="info"></div>
+                                                </li>
+                                                <th:block th:if="${orderDetailVO.orderStatus<4}">
+                                                    <li class="step">
+                                                </th:block>
+                                                <!--                                                <th:block th:if="${orderDetailVO.orderStatus==4}">-->
+                                                <!--                                                    <li class="step step-active">-->
+                                                <!--                                                </th:block>-->
+                                                <th:block th:if="${orderDetailVO.orderStatus>=4}">
+                                                    <li class="step step-active">
+                                                </th:block>
+                                                <div class="progress"><span class="text">交易成功</span></div>
+                                                <div class="info"></div>
+                                                </li>
+                                            </ol>
+                                        </div>
+                                    </th:block>
+                                </div>
+                                <table class="order-items-table">
+                                    <tbody>
+                                    <th:block th:each="item,itemStat: ${orderDetailVO.orderItemVOS}">
+                                        <input type="hidden" id="countSize" th:value="${itemStat.size}">
+                                        <tr>
+                                            <td class="col col-thumb">
+                                                <div class="figure figure-thumb">
+                                                    <a target="_blank" th:href="@{'/goods/detail/'+${item.goodsId}}">
+                                                        <img th:src="@{${item.goodsCoverImg}}"
+                                                             width="80" height="80" alt="">
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td class="col col-name">
+                                                <p class="name">
+                                                    <a class="show-name" target="_blank" th:href="@{'/goods/detail/'+${item.goodsId}}"
+                                                       th:text="${item.goodsName}">newbee</a>
+                                                </p>
+                                            </td>
+                                            <td class="col col-price"><p class="price"
+                                                                         th:text="${item.sellingPrice+'元 x '+item.goodsCount}">
+                                                1299元 × 1</p></td>
+                                            <td class="col col-actions">
+                                            </td>
+                                        </tr>
+                                    </th:block>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="editAddr" class="order-detail-info">
+                                <h3>收货信息</h3>
+                                <table class="info-table">
+                                    <tbody>
+                                    <tr>
+                                        <td>地址：</td>
+                                        <td th:text="${orderDetailVO.userAddress}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>姓名：</td>
+                                        <td th:text="${orderDetailVO.userName}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>手机号：</td>
+                                        <td th:text="${orderDetailVO.userPhone}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="actions">
+                                </div>
+                            </div>
+                            <div id="editTime" class="order-detail-info">
+                                <h3>支付方式</h3>
+                                <table class="info-table">
+                                    <tbody>
+                                    <tr>
+                                        <td th:text="${orderDetailVO.payTypeString==null?'在线支付':orderDetailVO.payTypeString}">
+                                            在线支付
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="actions">
+                                </div>
+                            </div>
+                            <div class="order-detail-total">
+                                <table class="total-table">
+                                    <tbody>
+                                    <tr>
+                                        <th>运费：</th>
+                                        <td><span class="num">0</span>元</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="total">商品总价：</th>
+                                        <td class="total"><span class="num"
+                                                                th:text="${orderDetailVO.totalPrice+'.00'}">1299.00</span>元
+                                        </td>
+                                    </tr>
+                                    <tr></tr>
+                                    <tr id="commentButton">
+                                        <td></td>
+                                        <td>
+                                            <th:block th:if="${orderDetailVO.orderStatus==4}">
+                                                <button onclick="goToComment()"  class="btn btn-small btn-primary" title="立即评价">立即评价</button>
+                                            </th:block>
+                                            <th:block th:if="${orderDetailVO.orderStatus==5}">
+                                                此订单已完成评价
+                                                <button onclick="goToCommentAgain()" class="btn btn-small btn-primary" title="再次评价">再次评价</button>
+                                            </th:block>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--用户评价-->
+                            <div style="display:none" id="commentContext">
+                                <table class="order-items-table">
+                                    <tbody>
+                                    <th:block th:each="item,itemStat : ${orderDetailVO.orderItemVOS}">
+                                        <tr>
+                                            <td class="col col-name">
+                                                <p class="name">
+                                                    <a class="show-name" target="_blank" th:href="@{'/goods/detail/'+${item.goodsId}}"
+                                                       th:text="${item.goodsName}">newbee</a>
+                                                </p>
+                                            </td>
+                                            <td class="col col-price"><p class="price"
+                                                                         th:text="${item.sellingPrice+'元 x '+item.goodsCount}">
+                                                1299元 × 1</p></td>
+                                            <td class="col col-actions">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5">
+                                                <div>在此写下您的评价</div>
+                                                <textarea rows="6" style="width: 500px;" th:id="'commentText'+${item.goodsId}"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="star" th:id="'goodsScore'+${itemStat.index}">
+                                                    <span>描述相符</span>
+                                                    <ul>
+                                                        <li><a href="javascript:;">1</a></li>
+                                                        <li><a href="javascript:;">2</a></li>
+                                                        <li><a href="javascript:;">3</a></li>
+                                                        <li><a href="javascript:;">4</a></li>
+                                                        <li><a href="javascript:;">5</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div class="star" th:id="'logisticsScore'+${itemStat.index}">
+                                                    <span>物流服务</span>
+                                                    <ul>
+                                                        <li><a href="javascript:;">1</a></li>
+                                                        <li><a href="javascript:;">2</a></li>
+                                                        <li><a href="javascript:;">3</a></li>
+                                                        <li><a href="javascript:;">4</a></li>
+                                                        <li><a href="javascript:;">5</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div class="star" th:id="'serviceScore'+${itemStat.index}">
+                                                    <span>服务态度</span>
+                                                    <ul>
+                                                        <li><a href="javascript:;">1</a></li>
+                                                        <li><a href="javascript:;">2</a></li>
+                                                        <li><a href="javascript:;">3</a></li>
+                                                        <li><a href="javascript:;">4</a></li>
+                                                        <li><a href="javascript:;">5</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div class="wrapper">
+                                                    <input type="file" name="file" th:id="'imgFile'+${item.goodsId}"/><br/><br/>
+                                                </div>
+                                                <button type="button" class="btn btn-primary" th:onclick="submitImg([[${item.goodsId}]])">提交图片</button><br><br>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <button type="button" th:onclick="finishComment([[${item.goodsId}]])" class="btn btn-small btn-primary" title="提交评价">提交评价</button>
+                                            </td>
+                                        </tr>
+                                    </th:block>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+
+                            <!--追加评价-->
+                            <div style="display:none" id="commentAgainContext">
+
+                                <table class="order-items-table">
+                                    <tbody>
+                                    <th:block th:each="item,itemStat : ${orderDetailVO.orderItemVOS}">
+                                        <tr>
+                                            <td class="col col-name">
+                                                <p class="name">
+                                                    <a  class="show-name" target="_blank" th:href="@{'/goods/detail/'+${item.goodsId}}"
+                                                        th:text="${item.goodsName}"></a>
+                                                </p>
+                                            </td>
+                                            <td class="col col-price"><p class="price"
+                                                                         th:text="${item.sellingPrice+'元 x '+item.goodsCount}">
+                                                1299元 × 1</p></td>
+                                            <td class="col col-actions">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5">
+                                                <div>追加您的评价</div>
+                                                <textarea rows="6" style="width: 500px;" th:id="'commentText2'+${item.goodsId}"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="star" th:id="'goodsScoreAdd'+${itemStat.index}">
+                                                    <span>描述相符</span>
+                                                    <ul>
+                                                        <li><a href="javascript:;">1</a></li>
+                                                        <li><a href="javascript:;">2</a></li>
+                                                        <li><a href="javascript:;">3</a></li>
+                                                        <li><a href="javascript:;">4</a></li>
+                                                        <li><a href="javascript:;">5</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div class="star" th:id="'logisticsScoreAdd'+${itemStat.index}">
+                                                    <span>物流服务</span>
+                                                    <ul>
+                                                        <li><a href="javascript:;">1</a></li>
+                                                        <li><a href="javascript:;">2</a></li>
+                                                        <li><a href="javascript:;">3</a></li>
+                                                        <li><a href="javascript:;">4</a></li>
+                                                        <li><a href="javascript:;">5</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div class="star" th:id="'serviceScoreAdd'+${itemStat.index}">
+                                                    <span>服务态度</span>
+                                                    <ul>
+                                                        <li><a href="javascript:;">1</a></li>
+                                                        <li><a href="javascript:;">2</a></li>
+                                                        <li><a href="javascript:;">3</a></li>
+                                                        <li><a href="javascript:;">4</a></li>
+                                                        <li><a href="javascript:;">5</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <button type="button" th:onclick="commentAgain([[${item.goodsId}]])" class="btn btn-small btn-primary" title="提交评价">提交评价</button>
+                                            </td>
+                                        </tr>
+                                    </th:block>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div th:replace="mall/footer::footer-fragment"></div>
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/mall/js/detail.js}"></script>
+<script type="text/javascript">
+    // 打分
+    var goodsScore;
+    var logisticsScore;
+    var serviceScore;
+
+    //计算商品种数
+    var size = document.getElementById('countSize').value;
+
+
+    function submitImg(goodsId){
+        var imgFile = document.getElementById("imgFile"+goodsId).files[0];
+        var orderNo = $("#orderNoValue").val();
+        var formData = new FormData();
+        formData.append('orderNo', orderNo);
+        formData.append('file', imgFile);
+        formData.append('goodsId', goodsId);
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/uploadImg",
+            data: formData,
+            processData: false,// 不处理数据
+            contentType: false, // 不设置内容类型
+            async: true,
+            success: function (result) {
+                if (result.resultCode == 200) {
+                    swal({
+                        title: "图片上传成功",
+                        text: "确认框",
+                        icon: "success",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then((flag) => {
+                        if(flag) {
+                            ;
+                        }
+                    }
+                );
+                } else {
+                    swal("操作失败", {
+                        icon: "error",
+                    });
+                }
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        });
+
+    }
+
+
+
+
+    // 提交评价
+    function finishComment(goodsId){
+
+        var commentText = document.getElementById("commentText"+goodsId).value;
+        var orderNo = $("#orderNoValue").val();
+        console.log(orderNo);
+        var data = {
+            "userEvaluation": commentText,
+            "goodsScore": goodsScore,
+            "logisticsScore": logisticsScore,
+            "serviceScore": serviceScore,
+            "orderNo": orderNo,
+            "goodsId": goodsId,
+            "userId": 9
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/shop-comment',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result) {
+                if (result.resultCode == 200) {
+                    swal({
+                        title: "提交成功",
+                        text: "确认框",
+                        icon: "success",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then((flag) => {
+                        if(flag) {;
+                        }
+                    }
+                );
+                } else {
+                    swal("操作失败", {
+                        icon: "error",
+                    });
+                }
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        });
+
+    }
+
+    //追加评价
+    function commentAgain(goodsId){
+
+        var commentText = document.getElementById("commentText2"+goodsId).value;
+        var orderNo = $("#orderNoValue").val();
+        console.log(orderNo);
+        var data = {
+            "addEvaluation": commentText,
+            "goodsScore": goodsScore,
+            "logisticsScore": logisticsScore,
+            "serviceScore": serviceScore,
+            "orderNo": orderNo,
+            "goodsId": goodsId,
+            "userId": 9
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/shop-comment',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result) {
+                if (result.resultCode == 200) {
+                    swal({
+                        title: "提交成功",
+                        text: "确认框",
+                        icon: "success",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then((flag) => {
+                        if(flag) {;
+                        }
+                    }
+                );
+                } else {
+                    swal("操作失败", {
+                        icon: "error",
+                    });
+                }
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        });
+    }
+
+    function goToComment() {
+        var  commentContext=document.getElementById('commentContext');
+        var  commentButton=document.getElementById('commentButton');
+        commentContext.style.display="block";
+        commentButton.style.display="none";
+
+        for (var i=0;i<size;i++) {
+            new Score({
+                callback: function (cfg) {
+                    console.log('goodsScore' + cfg.starAmount);
+                    goodsScore = cfg.starAmount;
+                    // console.log(goodsScore);
+                }
+            }, '#goodsScore'+i)
+
+            new Score({
+                callback: function(cfg) {
+                    console.log('logisticsScore'+cfg.starAmount);
+                    logisticsScore =cfg.starAmount;
+                }
+            },'#logisticsScore'+i)
+
+            new Score({
+                callback: function(cfg) {
+                    console.log('serviceScore'+cfg.starAmount);
+                    serviceScore =cfg.starAmount;
+                }
+            },'#serviceScore'+i)
+
+        }
+    }
+
+    function goToCommentAgain() {
+        var  commentContext=document.getElementById('commentAgainContext');
+        var  commentButton=document.getElementById('commentButton');
+        commentContext.style.display="block";
+        commentButton.style.display="none";
+        for (var i=0;i<size;i++) {
+            new Score({
+                callback: function (cfg) {
+                    console.log('goodsScore' + cfg.starAmount);
+                    goodsScore = cfg.starAmount;
+                    // console.log(goodsScore);
+                }
+            }, '#goodsScoreAdd'+i)
+
+            new Score({
+                callback: function(cfg) {
+                    console.log('logisticsScore'+cfg.starAmount);
+                    logisticsScore =cfg.starAmount;
+                }
+            },'#logisticsScoreAdd'+i)
+
+            new Score({
+                callback: function(cfg) {
+                    console.log('serviceScore'+cfg.starAmount);
+                    serviceScore =cfg.starAmount;
+                }
+            },'#serviceScoreAdd'+i)
+
+        }
+
+
+    }
+
+    function cancelOrder() {
+        var orderNo = $("#orderNoValue").val();
+        swal({
+            title: "客官请注意",
+            text: "确认要取消订单吗?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((flag) => {
+            if (flag) {
+                $.ajax({
+                    type: 'PUT',
+                    url: '/orders/' + orderNo + '/cancel',
+                    success: function (result) {
+                        if (result.resultCode == 200) {
+                            window.location.reload();
+                        } else {
+                            swal(result.message, {
+                                icon: "error",
+                            });
+                        }
+                    },
+                    error: function () {
+                        swal("操作失败", {
+                            icon: "error",
+                        });
+                    }
+                });
+            }
+        }
+    )
+        ;
+    }
+
+    function payOrder() {
+        var orderNo = $("#orderNoValue").val();
+        window.location.href = '/selectPayType?orderNo=' + orderNo;
+    }
+
+    function finishOrder() {
+        var orderNo = $("#orderNoValue").val();
+        $.ajax({
+            type: 'PUT',
+            url: '/orders/' + orderNo + '/finish',
+            success: function (result) {
+                if (result.resultCode == 200) {
+                    window.location.reload();
+                } else {
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                }
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        });
+    }
+
+    /**
+     * JS评分效果
+     */
+    function Score(options,context) {
+        this.config = {
+            selector                  :   context,     // 评分容器
+            renderCallback            :   null,        // 渲染页面后回调
+            callback                  :   null         // 点击评分回调
+        };
+
+        this.cache = {
+            aMsg : [
+                "很不满意|非常差",
+                "不满意|差",
+                "一般|一般",
+                "满意|好",
+                "非常满意|非常好"
+            ],
+            iStar  : 0,
+            iScore : 0
+        };
+
+        this.init(options);
+    }
+
+
+
+    Score.prototype = {
+
+        constructor: Score,
+
+        init: function(options){
+            this.config = $.extend(this.config,options || {});
+            var self = this,
+                _config = self.config,
+                _cache = self.cache;
+
+            self._renderHTML();
+        },
+        _renderHTML: function(){
+            var self = this,
+                _config = self.config;
+            var html = '<span class="desc"></span>' +
+                '<p class="star-p hidden"></p>';
+            $(_config.selector).each(function(index,item){
+                $(item).append(html);
+                $(item).wrap($('<div class="parentCls" style="position:relative"></div>'));
+                var parentCls = $(item).closest('.parentCls');
+                self._bindEnv(parentCls);
+                _config.renderCallback && $.isFunction(_config.renderCallback) && _config.renderCallback();
+            });
+
+        },
+        _bindEnv: function(parentCls){
+            var self = this,
+                _config = self.config,
+                _cache = self.cache;
+
+            $(_config.selector + ' li',parentCls).each(function(index,item){
+
+                // 鼠标移上
+                $(item).mouseover(function(e){
+                    var offsetLeft = $('ul',parentCls)[0].offsetLeft;
+                    ismax(index + 1);
+
+                    $('p',parentCls).hasClass('hidden') && $('p',parentCls).removeClass('hidden');
+                    $('p',parentCls).css({'left':index*$(this).width() + 12 + 'px'});
+
+
+                    var html = '<em>' +
+                        '<b>'+(index+1)+'</b>分 '+_cache.aMsg[index].split('|')[0]+'' +
+                        '</em>' + _cache.aMsg[index].split('|')[1];
+                    $('p',parentCls).html(html);
+                });
+
+                // 鼠标移出
+                $(item).mouseout(function(){
+                    ismax();
+                    !$('p',parentCls).hasClass('hidden') && $('p',parentCls).addClass('hidden');
+                });
+
+                // 鼠标点击
+                $(item).click(function(e){
+                    var index = $(_config.selector + ' li',parentCls).index($(this));
+                    _cache.iStar = index + 1;
+
+                    !$('p',parentCls).hasClass('hidden') && $('p',parentCls).addClass('hidden');
+                    var html = '<strong>' +
+                        (index+1) +
+                        '分</strong>' +_cache.aMsg[index].split('|')[1];
+
+                    $('.desc',parentCls).html(html);
+                    _config.callback && $.isFunction(_config.callback) && _config.callback({starAmount:_cache.iStar});
+                });
+
+            });
+
+            function ismax(iArg) {
+                _cache.iScore = iArg || _cache.iStar;
+                var lis = $(_config.selector + ' li',parentCls);
+
+                for(var i = 0; i < lis.length; i++) {
+                    lis[i].className = i < _cache.iScore ? "on" : "";
+                }
+            }
+        }
+    };
+
+</script>
+</body>
+</html>

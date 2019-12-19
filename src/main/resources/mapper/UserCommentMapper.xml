@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.apple.mall.dao.ShopUserCommentMapper">
+    <resultMap id="BaseResultMap" type="com.apple.mall.entity.ShopUserComment">
+        <id column="order_no" jdbcType="BIGINT" property="orderNo"/>
+        <result column="goods_id" jdbcType="BIGINT" property="goodsId"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="comment_create_time" jdbcType="TIMESTAMP" property="commentCreateTime"/>
+        <result column="comment_update_time" jdbcType="TIMESTAMP" property="commentUpdateTime"/>
+        <result column="user_evaluation" jdbcType="VARCHAR" property="userEvaluation"/>
+        <result column="add_evaluation" jdbcType="VARCHAR" property="addEvaluation"/>
+        <result column="goods_score" jdbcType="INTEGER" property="goodsScore"/>
+        <result column="service_score" jdbcType="INTEGER" property="serviceScore"/>
+        <result column="logistics_score" jdbcType="INTEGER" property="logisticsScore"/>
+        <result column="submit_img" jdbcType="VARCHAR" property="submitImg"/>
+        <result column="comment_is_deleted" jdbcType="TINYINT" property="commentIsDeleted"/>
+        <result column="seller_id" jdbcType="BIGINT" property="sellerId"/>
+        <result column="store_id" jdbcType="BIGINT" property="storeId"/>
+        <result column="store_reply" jdbcType="VARCHAR" property="storeReply"/>
+        <result column="reply_time" jdbcType="TIMESTAMP" property="replyTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    order_no, user_id, comment_create_time, comment_update_time,user_evaluation, add_evaluation, goods_score, service_score, logistics_score, submit_img, comment_is_deleted, seller_id,store_id,store_reply,reply_time
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_comment
+        where order_no = #{orderNo,jdbcType=BIGINT} and goods_id = #{goodsId,jdbcType=BIGINT} and comment_is_deleted = 0
+    </select>
+
+    <select id="selectByUserIdAndGoodsId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_comment
+        where user_id = #{UserId,jdbcType=BIGINT} and goods_id=#{goodsId,jdbcType=BIGINT} and comment_is_deleted = 0
+        limit 1
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_comment
+        where user_id = #{userId,jdbcType=BIGINT} and comment_is_deleted = 0
+    </select>
+
+    <select id="selectCountByUserId" resultType="int">
+    select
+    count(*)
+    from user_comment
+    where user_id = #{userId,jdbcType=BIGINT} and comment_is_deleted = 0
+    </select>
+
+    <update id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    update user_comment set comment_is_deleted = 1
+    where order_no = #{orderNo,jdbcType=BIGINT} and goods_id=#{goodsId,jdbcType=BIGINT} and comment_is_deleted = 0
+    </update>
+
+    <update id="deleteBatch">
+        update user_comment
+        set comment_is_deleted=1 where orderNo in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <insert id="insert" parameterType="com.apple.mall.entity.ShopUserComment">
+    insert into user_comment (order_no, goods_id, user_id,
+    comment_create_time, comment_update_time,user_evaluation, add_evaluation, goods_score, service_score,
+    logistics_score, submit_img, comment_is_deleted, seller_id,store_id,store_reply,reply_time)
+
+    values (#{orderNo,jdbcType=BIGINT},#{goodsId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{commentCreateTime,jdbcType=TIMESTAMP},
+      #{commentUpdateTime,jdbcType=TIMESTAMP}, #{userEvaluation,jdbcType=VARCHAR}, #{addEvaluation,jdbcType=VARCHAR},
+      #{goodsScore,jdbcType=INTEGER}, #{serviceScore,jdbcType=INTEGER},
+      #{logisticsScore,jdbcType=INTEGER},#{submitImg,jdbcType=VARCHAR}, #{commentIsDeleted,jdbcType=TINYINT},
+      #{sellerId,jdbcType=BIGINT}, #{storeId,jdbcType=BIGINT},#{storeReply,jdbcType=VARCHAR},
+      #{replyTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.apple.mall.entity.ShopUserComment">
+        update user_comment
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+
+            <if test="commentCreateTime != null">
+                comment_create_time = #{commentCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="commentUpdateTime != null">
+                comment_update_time = #{commentUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userEvaluation != null">
+                user_evaluation = #{userEvaluation,jdbcType=VARCHAR},
+            </if>
+            <if test="addEvaluation != null">
+                add_evaluation = #{addEvaluation,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsScore != null">
+                goods_score = #{goodsScore,jdbcType=INTEGER},
+            </if>
+            <if test="serviceScore != null">
+                service_score = #{serviceScore,jdbcType=INTEGER},
+            </if>
+            <if test="logisticsScore != null">
+                logistics_score = #{logisticsScore,jdbcType=INTEGER},
+            </if>
+            <if test="submitImg != null">
+                submit_img = #{submitImg,jdbcType=VARCHAR},
+            </if>
+            <if test="commentIsDeleted != null">
+                comment_is_deleted = #{commentIsDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="sellerId != null">
+                seller_id = #{sellerId,jdbcType=BIGINT},
+            </if>
+            <if test="storeId != null">
+                store_id = #{storeId,jdbcType=BIGINT},
+            </if>
+            <if test="storeReply != null">
+                store_reply = #{storeReply,jdbcType=VARCHAR},
+            </if>
+            <if test="replyTime != null">
+                reply_time = #{replyTime,jdbcType=TIMESTAMP},
+            </if>
+
+        </set>
+        where order_no = #{orderNo,jdbcType=BIGINT} and goods_id=#{goodsId,jdbcType=BIGINT}
+    </update>
+    <insert id="insertSelective" parameterType="com.apple.mall.entity.ShopUserComment">
+        insert into user_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="commentCreateTime != null">
+                comment_create_time,
+            </if>
+            <if test="commentUpdateTime != null">
+                comment_update_time,
+            </if>
+            <if test="userEvaluation != null">
+                user_evaluation,
+            </if>
+            <if test="addEvaluation != null">
+                add_evaluation,
+            </if>
+            <if test="goodsScore != null">
+                goods_score,
+            </if>
+            <if test="serviceScore != null">
+                service_score,
+            </if>
+            <if test="logisticsScore != null">
+                logistics_score,
+            </if>
+            <if test="submitImg != null">
+                submit_img,
+            </if>
+            <if test="commentIsDeleted != null">
+                comment_is_deleted,
+            </if>
+            <if test="sellerId != null">
+                seller_id,
+            </if>
+            <if test="storeId != null">
+                store_id,
+            </if>
+            <if test="storeReply != null">
+                store_reply,
+            </if>
+            <if test="replyTime != null">
+                reply_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=BIGINT},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="commentCreateTime != null">
+                #{commentCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="commentUpdateTime != null">
+                #{commentUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userEvaluation != null">
+                #{userEvaluation,jdbcType=VARCHAR},
+            </if>
+            <if test="addEvaluation != null">
+                #{addEvaluation,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsScore != null">
+                #{goodsScore,jdbcType=INTEGER},
+            </if>
+            <if test="serviceScore != null">
+                #{serviceScore,jdbcType=INTEGER},
+            </if>
+            <if test="logisticsScore != null">
+                #{logisticsScore,jdbcType=INTEGER},
+            </if>
+            <if test="submitImg != null">
+                #{submitImg,jdbcType=VARCHAR},
+            </if>
+            <if test="commentIsDeleted != null">
+                #{commentIsDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="sellerId != null">
+                #{sellerId,jdbcType=BIGINT},
+            </if>
+            <if test="storeId != null">
+                #{storeId,jdbcType=BIGINT},
+            </if>
+            <if test="storeReply != null">
+                #{storeReply,jdbcType=VARCHAR},
+            </if>
+            <if test="replyTime != null">
+                #{replyTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.apple.mall.entity.ShopUserComment">
+    update user_comment
+    set     user_id = #{userId,jdbcType=BIGINT},
+            comment_create_time = #{commentCreateTime,jdbcType=TIMESTAMP},
+            comment_update_time = #{commentUpdateTime,jdbcType=TIMESTAMP},
+            user_evaluation = #{userEvaluation,jdbcType=VARCHAR},
+            add_evaluation = #{addEvaluation,jdbcType=VARCHAR},
+            goods_score = #{goodsScore,jdbcType=INTEGER},
+            service_score = #{serviceScore,jdbcType=INTEGER},
+            logistics_score = #{logisticsScore,jdbcType=INTEGER},
+            submit_img = #{submitImg,jdbcType=VARCHAR},
+            comment_is_deleted = #{commentIsDeleted,jdbcType=TINYINT},
+            seller_id = #{sellerId,jdbcType=BIGINT},
+            store_id = #{storeId,jdbcType=BIGINT},
+            store_reply = #{storeReply,jdbcType=VARCHAR},
+            reply_time = #{replyTime,jdbcType=TIMESTAMP}
+
+        where order_no = #{orderNo,jdbcType=BIGINT} and goods_id = #{goodsId,jdbcType=BIGINT}
+  </update>
+</mapper>

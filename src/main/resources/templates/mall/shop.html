@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mall/header::head-fragment('NewBee商城-搜索','search')">
+</head>
+<body>
+<header th:replace="mall/header::header-fragment"></header>
+<!-- nav -->
+<nav th:replace="mall/header::nav-fragment"></nav>
+
+<br>
+    <div style="position: relative;left: 240px;color: #1baeae;font-size: 30px;color: #1baeae">
+        <a th:text="${shop.shopName}"></a>
+    </div>
+<br>
+<hr>
+<div class="goods_item center">
+    <div class="main center">
+<th:block th:each="good : ${goods}">
+    <div class="item_card_frame">
+        <div class="item_card"><a th:href="@{/detail(goodsId=${good.goodsId})}" target="_blank">
+            <img th:src="@{${good.goodsCoverImg}}" th:alt="${good.goodsName}"></a></div>
+        <div class="item_brand"><a th:href="@{/detail(goodsId=${good.goodsId})}" target="_blank"
+                                   th:text="${good.goodsName}">newbee.ltd</a></div>
+        <div class="item_sub_intro" th:text="${good.goodsIntro}">newbee.ltd</div>
+        <div class="item_price" th:text="${good.sellingPrice+'.00元'}">1299.00元</div>
+    </div>
+</th:block>
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div th:replace="mall/footer::footer-fragment"></div>
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/mall/js/search.js}" type="text/javascript"></script>
+</body>
+</html>
