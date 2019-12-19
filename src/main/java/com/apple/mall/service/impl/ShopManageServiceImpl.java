@@ -39,4 +39,12 @@ public class ShopManageServiceImpl implements ShopManageService {
     public Shop findMallShopById(Integer id) {
         return shopManageMapper.findMallShopById(id);
     }
+
+    @Override
+    public Boolean lockShops(Integer[] ids, int lockStatus) {
+        if (ids.length < 1) {
+            return false;
+        }
+        return shopManageMapper.lockManageBatch(ids, lockStatus) > 0;
+    }
 }

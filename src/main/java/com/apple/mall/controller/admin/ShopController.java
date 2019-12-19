@@ -41,22 +41,22 @@ public class ShopController {
         return ResultGenerator.genSuccessResult(shopManageService.getMallShopsPage(pageUtil));
     }
 
-//    /**
-//     * 用户禁用与解除禁用(0-未锁定 1-已锁定)
-//     */
-//    @RequestMapping(value = "/shops/lock/{lockStatus}", method = RequestMethod.POST)
-//    @ResponseBody
-//    public Result delete(@RequestBody Integer[] ids, @PathVariable int lockStatus) {
-//        if (ids.length < 1) {
-//            return ResultGenerator.genFailResult("参数异常！");
-//        }
-//        if (lockStatus != 0 && lockStatus != 1 && lockStatus != 2) {
-//            return ResultGenerator.genFailResult("操作非法！");
-//        }
-//        if (userService.lockUsers(ids, lockStatus)) {
-//            return ResultGenerator.genSuccessResult();
-//        } else {
-//            return ResultGenerator.genFailResult("禁用失败");
-//        }
-//    }
+    /**
+     * 商铺禁用与解除禁用(0-未锁定 1-已锁定)
+     */
+    @RequestMapping(value = "/shops/lock/{lockStatus}", method = RequestMethod.POST)
+    @ResponseBody
+    public Result delete(@RequestBody Integer[] ids, @PathVariable int lockStatus) {
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        if (lockStatus != 0 && lockStatus != 1 && lockStatus != 2) {
+            return ResultGenerator.genFailResult("操作非法！");
+        }
+        if (shopManageService.lockShops(ids, lockStatus)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult("禁用失败");
+        }
+    }
 }

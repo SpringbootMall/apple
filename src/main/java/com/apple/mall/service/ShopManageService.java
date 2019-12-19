@@ -38,6 +38,13 @@ public interface ShopManageService {
      */
     Shop findMallShopById(Integer id);
 
-
+    /**
+     * 店铺禁用与解除禁用(0-未锁定 1-已锁定)
+     *
+     * @param ids
+     * @param lockStatus
+     * @return
+     */
+    Boolean lockShops(Integer[] ids, int lockStatus);
 
 }
