@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : PersonalProjectsDataBase
+ Source Server         : 123
  Source Server Type    : MySQL
  Source Server Version : 80003
  Source Host           : localhost:3306
- Source Schema         : apple_mall
+ Source Schema         : applemall2
 
  Target Server Type    : MySQL
  Target Server Version : 80003
  File Encoding         : 65001
 
- Date: 19/12/2019 15:31:03
+ Date: 19/12/2019 21:19:16
 */
 
 SET NAMES utf8mb4;
@@ -49,9 +49,9 @@ CREATE TABLE `carousel`  (
   `redirect_url` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '\'##\'' COMMENT '点击后的跳转地址(默认不跳转)',
   `carousel_rank` int(11) NOT NULL DEFAULT 0 COMMENT '排序值(字段越大越靠前)',
   `is_deleted` tinyint(4) NOT NULL DEFAULT 0 COMMENT '删除标识字段(0-未删除 1-已删除)',
-  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `create_user` int(11) NOT NULL DEFAULT 0 COMMENT '创建者id',
-  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '修改时间',
+  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
   `update_user` int(11) NOT NULL DEFAULT 0 COMMENT '修改者id',
   PRIMARY KEY (`carousel_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
@@ -72,10 +72,10 @@ CREATE TABLE `cart_item`  (
   `goods_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '关联商品id',
   `goods_count` int(11) NOT NULL DEFAULT 1 COMMENT '数量(最大为5)',
   `is_deleted` tinyint(4) NOT NULL DEFAULT 0 COMMENT '删除标识字段(0-未删除 1-已删除)',
-  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
-  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '最新修改时间',
+  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最新修改时间',
   PRIMARY KEY (`cart_item_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 91 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 92 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cart_item
@@ -97,11 +97,12 @@ INSERT INTO `cart_item` VALUES (82, 9, 10159, 4, 1, '2019-12-17 00:09:26', '2019
 INSERT INTO `cart_item` VALUES (83, 10, 10161, 2, 0, '2019-12-17 12:44:24', '2019-12-17 12:44:40');
 INSERT INTO `cart_item` VALUES (84, 10, 1001, 1, 1, '2019-12-17 14:03:46', '2019-12-17 15:00:34');
 INSERT INTO `cart_item` VALUES (85, 10, 1002, 2, 1, '2019-12-17 15:09:42', '2019-12-17 15:19:34');
-INSERT INTO `cart_item` VALUES (86, 10, 1001, 1, 0, '2019-12-17 15:40:35', '2019-12-17 15:40:35');
+INSERT INTO `cart_item` VALUES (86, 10, 1001, 1, 1, '2019-12-17 15:40:35', '2019-12-17 15:40:35');
 INSERT INTO `cart_item` VALUES (87, 9, 1002, 1, 1, '2019-12-17 15:43:05', '2019-12-17 15:43:05');
 INSERT INTO `cart_item` VALUES (88, 9, 1001, 1, 1, '2019-12-17 15:43:16', '2019-12-17 15:43:16');
 INSERT INTO `cart_item` VALUES (89, 11, 1009, 3, 1, '2019-12-18 17:25:08', '2019-12-18 17:25:15');
 INSERT INTO `cart_item` VALUES (90, 11, 1006, 2, 0, '2019-12-18 20:55:11', '2019-12-18 20:55:23');
+INSERT INTO `cart_item` VALUES (91, 10, 1111, 1, 1, '2019-12-19 19:56:54', '2019-12-19 19:56:54');
 
 -- ----------------------------
 -- Table structure for goods_category
@@ -114,9 +115,9 @@ CREATE TABLE `goods_category`  (
   `category_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '分类名称',
   `category_rank` int(11) NOT NULL DEFAULT 0 COMMENT '排序值(字段越大越靠前)',
   `is_deleted` tinyint(4) NOT NULL DEFAULT 0 COMMENT '删除标识字段(0-未删除 1-已删除)',
-  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `create_user` int(11) NOT NULL DEFAULT 0 COMMENT '创建者id',
-  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '修改时间',
+  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
   `update_user` int(11) NULL DEFAULT 0 COMMENT '修改者id',
   PRIMARY KEY (`category_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 107 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
@@ -235,9 +236,9 @@ CREATE TABLE `goods_info`  (
   `tag` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '商品标签',
   `goods_sell_status` int(20) NOT NULL DEFAULT 0 COMMENT '商品上架状态 0-下架 1-上架',
   `create_user` int(20) NOT NULL DEFAULT 0 COMMENT '添加者主键id',
-  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '商品添加时间',
+  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '商品添加时间',
   `update_user` int(11) NOT NULL DEFAULT 0 COMMENT '修改者主键id',
-  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '商品修改时间',
+  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '商品修改时间',
   `shop_id` bigint(20) NOT NULL COMMENT '店铺',
   `goods_category` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品类别',
   PRIMARY KEY (`goods_id`) USING BTREE
@@ -246,7 +247,7 @@ CREATE TABLE `goods_info`  (
 -- ----------------------------
 -- Records of goods_info
 -- ----------------------------
-INSERT INTO `goods_info` VALUES (1001, '小米8', '小米手机8代', 51, '/mall/image/goods/1001.jpg', '暂无', '暂无', 1000, 1000, 99, '推荐', 0, 0, '2019-12-11 13:52:29', 0, '2019-12-18 13:52:34', 101, '手机');
+INSERT INTO `goods_info` VALUES (1001, '小米8', '小米手机8代', 51, '/mall/image/goods/1001.jpg', '暂无', '暂无', 1000, 1000, 98, '推荐', 0, 0, '2019-12-11 13:52:29', 0, '2019-12-18 13:52:34', 101, '手机');
 INSERT INTO `goods_info` VALUES (1002, '小米9', '小米手机9代', 51, '/mall/image/goods/1002.jpg', '暂无', '暂无', 1000, 1001, 99, '推荐', 0, 0, '2019-12-17 15:06:53', 0, '2019-12-17 15:06:59', 101, '手机');
 INSERT INTO `goods_info` VALUES (1003, '小米10', '小米手机10代', 51, '/mall/image/goods/1003.jpg', '暂无', '未知屏', 8888, 8887, 100, '暂无', 0, 0, '2019-12-17 15:55:10', 0, '2019-12-17 15:55:15', 101, '手机');
 INSERT INTO `goods_info` VALUES (1004, '小米Redmi', '小米Redmi系列', 51, '/mall/image/goods/1004.jpg', '暂无', '全面屏', 7777, 7776, 100, '暂无', 0, 0, '2019-12-19 15:57:14', 0, '2019-12-18 15:57:19', 101, '手机');
@@ -259,9 +260,9 @@ INSERT INTO `goods_info` VALUES (1010, '华硕电脑', '败家之眼', 52, '/mal
 INSERT INTO `goods_info` VALUES (1011, '苹果8', '圆滑曲线', 51, '/mall/image/goods/1011.jpg', '暂无', '熟悉的味道', 7777, 6666, 100, '暂无', 0, 0, '2019-12-17 16:11:36', 0, '2019-12-17 16:11:39', 101, '手机');
 INSERT INTO `goods_info` VALUES (1012, '苹果9', '最新苹果手机', 51, '/mall/image/goods/1012.jpg', '暂无', '值一个', 8888, 8887, 100, '暂无', 0, 0, '2019-12-17 16:14:37', 0, '2019-12-17 16:14:41', 101, '手机');
 INSERT INTO `goods_info` VALUES (1013, '苹果X', '最热的苹果手机', 51, '/mall/image/goods/1013.jpg', '暂无', '也值一个', 9999, 19999, 100, '暂无', 0, 0, '2019-12-17 16:17:57', 0, '2019-12-17 16:18:02', 101, '手机');
-INSERT INTO `goods_info` VALUES (1110, '华为mate30', '华为最新手机', 51, '4242', '/admin/dist/img/no-img.png', '蜂窝摄像头', 8888, 8887, 100, '暂无', 0, 0, '2019-12-17 17:09:36', 0, '2019-12-17 17:09:39', 102, '手机');
-INSERT INTO `goods_info` VALUES (1111, '华为matePad', '华为最新电脑', 51, '/admin/dist/img/no-img.png', '/admin/dist/img/no-img.png', '360°折叠', 12000, 11999, 100, '暂无', 0, 0, '2019-12-17 17:11:22', 0, '2019-12-17 17:11:26', 103, '电脑');
-INSERT INTO `goods_info` VALUES (1112, '花花公子鞋子', '棉鞋', 55, '/admin/dist/img/no-img.png', '/admin/dist/img/no-img.png', '绝对的保暖', 199, 198, 100, '暂无', 0, 0, '2019-12-17 17:12:27', 0, '2019-12-17 17:12:30', 107, '鞋子');
+INSERT INTO `goods_info` VALUES (1110, '华为mate30', '华为最新手机', 51, '/mall/image/goods/1110.jpg', '暂无', '蜂窝摄像头', 8888, 8887, 100, '暂无', 1, 0, '2019-12-17 17:09:36', 0, '2019-12-17 17:09:39', 102, '手机');
+INSERT INTO `goods_info` VALUES (1111, '华为matePad', '华为最新电脑', 51, '/mall/image/goods/1111.jpg', '暂无', '360°折叠', 12000, 11999, 99, '暂无', 0, 0, '2019-12-17 17:11:22', 0, '2019-12-17 17:11:26', 103, '电脑');
+INSERT INTO `goods_info` VALUES (1112, '花花公子鞋子', '棉鞋', 55, '/mall/image/goods/1112.jpg', '暂无', '绝对的保暖', 199, 198, 100, '暂无', 0, 0, '2019-12-17 17:12:27', 0, '2019-12-17 17:12:30', 107, '鞋子');
 
 -- ----------------------------
 -- Table structure for index_config
@@ -275,9 +276,9 @@ CREATE TABLE `index_config`  (
   `redirect_url` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '##' COMMENT '点击后的跳转地址(默认不跳转)',
   `config_rank` int(11) NOT NULL DEFAULT 0 COMMENT '排序值(字段越大越靠前)',
   `is_deleted` tinyint(4) NOT NULL DEFAULT 0 COMMENT '删除标识字段(0-未删除 1-已删除)',
-  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `create_user` int(11) NOT NULL DEFAULT 0 COMMENT '创建者id',
-  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '最新修改时间',
+  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最新修改时间',
   `update_user` int(11) NULL DEFAULT 0 COMMENT '修改者id',
   PRIMARY KEY (`config_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
@@ -328,20 +329,22 @@ CREATE TABLE `mall_order`  (
   `user_phone` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '收货人手机号',
   `user_address` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '收货人收货地址',
   `is_deleted` tinyint(4) NOT NULL DEFAULT 0 COMMENT '删除标识字段(0-未删除 1-已删除)',
-  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
-  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '最新修改时间',
+  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最新修改时间',
+  `shop_id` int(20) NOT NULL COMMENT '店铺id',
   PRIMARY KEY (`order_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of mall_order
 -- ----------------------------
-INSERT INTO `mall_order` VALUES (21, '15751058380811610', 9, 1198, 1, 1, '2019-11-30 17:24:06', 4, '', '', '', '南昌大学前湖校区19栋', 0, '2019-11-30 17:23:58', '2019-12-07 22:44:03');
-INSERT INTO `mall_order` VALUES (22, '15757158825538297', 9, 1795, 1, 1, '2019-12-07 18:51:28', 5, '', '13213', '18888888888', '南昌大学前湖校区19栋', 0, '2019-12-07 18:51:22', '2019-12-17 10:24:56');
-INSERT INTO `mall_order` VALUES (23, '15757158825538296', 9, 2244, 1, 1, '2019-12-09 15:41:43', 5, '', 'zjc', '18018679845', '南昌大学前湖校区20栋120', 0, '2019-12-09 15:41:35', '2019-12-17 16:55:24');
-INSERT INTO `mall_order` VALUES (24, '15764834493202217', 9, 1246, 1, 1, '2019-12-16 16:04:15', 1, '', '', '', '南昌大学前湖校区zjc18016708265', 0, '2019-12-16 16:04:09', '2019-12-16 16:04:15');
-INSERT INTO `mall_order` VALUES (25, '15765688723021038', 9, 2001, 1, 1, '2019-12-17 15:47:56', 5, '', '', '', '南昌大学前湖校区zjc18016708265', 0, '2019-12-17 15:47:52', '2019-12-17 17:01:35');
-INSERT INTO `mall_order` VALUES (26, '15766611197761441', 11, 33597, 1, 2, '2019-12-18 17:25:25', 1, '', '', '', '江西省南昌市新建区南昌大学前湖校区20栋', 0, '2019-12-18 17:25:19', '2019-12-18 17:25:25');
+INSERT INTO `mall_order` VALUES (21, '15751058380811610', 9, 1198, 1, 1, '2019-11-30 17:24:06', 4, '', '', '', '南昌大学前湖校区19栋', 0, '2019-11-30 17:23:58', '2019-12-07 22:44:03', 0);
+INSERT INTO `mall_order` VALUES (22, '15757158825538297', 9, 1795, 1, 1, '2019-12-07 18:51:28', 5, '', '13213', '18888888888', '南昌大学前湖校区19栋', 0, '2019-12-07 18:51:22', '2019-12-17 10:24:56', 0);
+INSERT INTO `mall_order` VALUES (23, '15757158825538296', 9, 2244, 1, 1, '2019-12-09 15:41:43', 5, '', 'zjc', '18018679845', '南昌大学前湖校区20栋120', 0, '2019-12-09 15:41:35', '2019-12-17 16:55:24', 0);
+INSERT INTO `mall_order` VALUES (24, '15764834493202217', 9, 1246, 1, 1, '2019-12-16 16:04:15', 1, '', '', '', '南昌大学前湖校区zjc18016708265', 0, '2019-12-16 16:04:09', '2019-12-16 16:04:15', 0);
+INSERT INTO `mall_order` VALUES (25, '15765688723021038', 9, 2001, 1, 1, '2019-12-17 15:47:56', 5, '', '', '', '南昌大学前湖校区zjc18016708265', 0, '2019-12-17 15:47:52', '2019-12-17 17:01:35', 0);
+INSERT INTO `mall_order` VALUES (26, '15766611197761441', 11, 33597, 1, 2, '2019-12-18 17:25:25', 1, '', '', '', '江西省南昌市新建区南昌大学前湖校区20栋', 0, '2019-12-18 17:25:19', '2019-12-18 17:25:25', 0);
+INSERT INTO `mall_order` VALUES (27, '15767566209839377', 10, 12999, 1, 1, '2019-12-19 19:57:06', 1, '', '', '', '努巴尼qwed1234567891', 0, '2019-12-19 19:57:00', '2019-12-19 19:57:06', 0);
 
 -- ----------------------------
 -- Table structure for order_item
@@ -355,9 +358,9 @@ CREATE TABLE `order_item`  (
   `goods_cover_img` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '下单时商品的主图(订单快照)',
   `selling_price` int(11) NOT NULL DEFAULT 1 COMMENT '下单时商品的价格(订单快照)',
   `goods_count` int(11) NOT NULL DEFAULT 1 COMMENT '数量(订单快照)',
-  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`order_item_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 45 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 47 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of order_item
@@ -406,6 +409,35 @@ INSERT INTO `order_item` VALUES (41, 24, 10159, 'Apple AirPods 配充电盒', '/
 INSERT INTO `order_item` VALUES (42, 25, 1002, '小米9', '暂无', 1001, 1, '2019-12-17 15:47:52');
 INSERT INTO `order_item` VALUES (43, 25, 1001, '小米8', '暂无', 1000, 1, '2019-12-17 15:47:52');
 INSERT INTO `order_item` VALUES (44, 26, 1009, '神舟笔记本电脑', '/mall/image/goods/1009.jpg', 11199, 3, '2019-12-18 17:25:19');
+INSERT INTO `order_item` VALUES (45, 27, 1001, '小米8', '/mall/image/goods/1001.jpg', 1000, 1, '2019-12-19 19:57:00');
+INSERT INTO `order_item` VALUES (46, 27, 1111, '华为matePad', '/mall/image/goods/1111.jpg', 11999, 1, '2019-12-19 19:57:00');
+
+-- ----------------------------
+-- Table structure for post_info
+-- ----------------------------
+DROP TABLE IF EXISTS `post_info`;
+CREATE TABLE `post_info`  (
+  `post_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '帖子的id',
+  `user` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '发帖人',
+  `post_content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '帖子内容',
+  `thumb_number` int(11) NOT NULL COMMENT '点赞数',
+  `post_time` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '帖子发布时间',
+  PRIMARY KEY (`post_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of post_info
+-- ----------------------------
+INSERT INTO `post_info` VALUES (1, 'LS', '这的手机真的不错，下次一定买', 149, '2019-12-18 14:09:01');
+INSERT INTO `post_info` VALUES (2, 'ZCC', '在座的各位都是垃圾', 18, '2019-12-18 16:07:28');
+INSERT INTO `post_info` VALUES (3, '1387098..', '卧槽！完蛋', 4, '2019-12-18 20:32:11');
+INSERT INTO `post_info` VALUES (4, '1387098..', '吔屎！', 2, '2019-12-18 20:29:16');
+INSERT INTO `post_info` VALUES (5, '1321', '真的厉害！', 337, '2019-12-18 20:32:11');
+INSERT INTO `post_info` VALUES (6, '1387098..', '这是一个评论', 1, '2019-12-18 20:31:53');
+INSERT INTO `post_info` VALUES (7, '1387098..', '没错。我在凑字数', 0, '2019-12-18 20:32:11');
+INSERT INTO `post_info` VALUES (8, '1387098..', '这有5个字', 1, '2019-12-18 20:36:39');
+INSERT INTO `post_info` VALUES (28, '1387098..', '啊哈哈啊哈哈哈哈', 0, '2019-12-18 21:09:41');
+INSERT INTO `post_info` VALUES (29, '1387098..', '21232123132132', 0, '2019-12-19 12:12:48');
 
 -- ----------------------------
 -- Table structure for shops_info
@@ -421,19 +453,20 @@ CREATE TABLE `shops_info`  (
   `shop_intro` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '简介',
   `shop_creattime` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '店铺创建时间',
   `is_deleted` tinyint(4) NOT NULL COMMENT '注销状态，是否注销 0-正常 1-注销',
+  `seller_id` bigint(20) NOT NULL COMMENT '商家id',
   PRIMARY KEY (`shop_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 108 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of shops_info
 -- ----------------------------
-INSERT INTO `shops_info` VALUES (101, 'LS手机店', '李帅', '手机', '/mall/image/shops/101.jpg', 0, '手机', '今天', 0);
-INSERT INTO `shops_info` VALUES (102, 'zzc手机店', 'zzc', '手机', '/mall/image/shops/102.jpg', 0, '不光小米手机，什么都卖', '今天', 0);
-INSERT INTO `shops_info` VALUES (103, 'LS电脑城', 'LS', '电脑', '/mall/image/shops/103.jpg', 0, '卖电脑', '今天', 0);
-INSERT INTO `shops_info` VALUES (104, '苹果手机旗舰店', 'Apple', '手机', '/mall/image/shops/104.jpg', 0, '苹果手机', '今天', 0);
-INSERT INTO `shops_info` VALUES (105, 'vivo手机旗舰店', 'vivo', '手机', '/mall/image/shops/105.jpg', 0, 'vivo手机', '今天', 0);
-INSERT INTO `shops_info` VALUES (106, '锤子手机旗舰店', '罗永浩', '手机', '/mall/image/shops/106.jpg', 0, '买个锤子', '今天', 0);
-INSERT INTO `shops_info` VALUES (107, '花花公子旗舰店', '花花公子', '鞋子，衣服', '/mall/image/shops/107.jpg', 0, '衣服，鞋子', '今天', 0);
+INSERT INTO `shops_info` VALUES (101, 'LS手机店', '李帅', '手机', '/mall/image/shops/101.jpg', 0, '手机', '今天', 0, 0);
+INSERT INTO `shops_info` VALUES (102, 'zzc手机店', 'zzc', '手机', '/mall/image/shops/102.jpg', 0, '不光小米手机，什么都卖', '今天', 0, 0);
+INSERT INTO `shops_info` VALUES (103, 'LS电脑城', 'LS', '电脑', '/mall/image/shops/103.jpg', 0, '卖电脑', '今天', 0, 0);
+INSERT INTO `shops_info` VALUES (104, '苹果手机旗舰店', 'Apple', '手机', '/mall/image/shops/104.jpg', 0, '苹果手机', '今天', 0, 0);
+INSERT INTO `shops_info` VALUES (105, 'vivo手机旗舰店', 'vivo', '手机', '/mall/image/shops/105.jpg', 0, 'vivo手机', '今天', 0, 0);
+INSERT INTO `shops_info` VALUES (106, '锤子手机旗舰店', '罗永浩', '手机', '/mall/image/shops/106.jpg', 0, '买个锤子', '今天', 0, 0);
+INSERT INTO `shops_info` VALUES (107, '花花公子旗舰店', '花花公子', '鞋子，衣服', '/mall/image/shops/107.jpg', 0, '衣服，鞋子', '今天', 0, 0);
 
 -- ----------------------------
 -- Table structure for user
@@ -447,9 +480,9 @@ CREATE TABLE `user`  (
   `introduce_sign` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '个性签名',
   `address` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '收货地址',
   `is_deleted` tinyint(4) NOT NULL DEFAULT 0 COMMENT '注销标识字段(0-正常 1-已注销)',
-  `right_flag` tinyint(4) NOT NULL DEFAULT 1 COMMENT '用户类型字段(1-会员 2-商家)',
+  `right_flag` tinyint(4) NOT NULL DEFAULT 1 COMMENT '用户类型字段(0-会员 1-商家)',
   `locked_flag` tinyint(4) NOT NULL COMMENT '锁定标识字段(1-已锁定 0-未锁定)',
-  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '注册时间',
+  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
   PRIMARY KEY (`user_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
@@ -478,7 +511,7 @@ CREATE TABLE `user_apply`  (
   `is_deleted` tinyint(4) NOT NULL DEFAULT 0 COMMENT '注销标识字段(0-正常 1-已注销)',
   `right_flag` tinyint(4) NOT NULL DEFAULT 1 COMMENT '锁定标识字段(0-已锁定 1-未锁定 2-商家用户)',
   `apply_reason` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '申请原因',
-  `apply_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '申请修改信息时间'
+  `apply_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '申请修改信息时间'
 ) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -496,8 +529,8 @@ CREATE TABLE `user_comment`  (
   `order_no` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '订单号',
   `goods_id` bigint(20) NOT NULL COMMENT '商品表主键id',
   `user_id` bigint(20) NOT NULL COMMENT '用户主键id',
-  `comment_create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '评价创建时间',
-  `comment_update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '评价最新修改时间',
+  `comment_create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '评价创建时间',
+  `comment_update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '评价最新修改时间',
   `user_evaluation` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '该用户还未评价' COMMENT '用户评价',
   `add_evaluation` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '追加评价',
   `goods_score` int(11) NOT NULL DEFAULT 5 COMMENT '商品打分(1-5)',
@@ -508,7 +541,7 @@ CREATE TABLE `user_comment`  (
   `seller_id` bigint(20) NULL DEFAULT 123456 COMMENT '卖家主键id',
   `store_id` bigint(20) NULL DEFAULT 123456 COMMENT '店铺主键id',
   `store_reply` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '商家回复',
-  `reply_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '商家回复时间',
+  `reply_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '商家回复时间',
   PRIMARY KEY (`order_no`, `goods_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 15765688723021039 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
