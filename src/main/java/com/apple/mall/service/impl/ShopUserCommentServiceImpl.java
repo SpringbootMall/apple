@@ -40,7 +40,9 @@ public class ShopUserCommentServiceImpl implements ShopUserCommentService {
             orderMapper.commentSuccess(shopUserComment.getOrderNo().toString());
             return ServiceResultEnum.SUCCESS.getResult();
         }
-        if (shopUserCommentMapper.insertSelective(shopUserComment) > 0) {
+        else if (shopUserCommentMapper.insertSelective(shopUserComment) > 0) {
+            //修改订单状态
+            orderMapper.commentSuccess(shopUserComment.getOrderNo().toString());
             return ServiceResultEnum.SUCCESS.getResult();
         }
         return ServiceResultEnum.DB_ERROR.getResult();
