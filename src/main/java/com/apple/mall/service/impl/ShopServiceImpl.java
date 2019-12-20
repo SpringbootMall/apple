@@ -22,7 +22,7 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public Shop shop(int id){
+    public Shop shop(Long id){
 
         return shopMapper.shop(id);
     }
