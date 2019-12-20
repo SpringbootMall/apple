@@ -50,6 +50,7 @@ public class OrderController {
         }
         request.setAttribute("orderDetailVO", orderDetailVO);
         request.setAttribute("userOrderComment", userOrderComment);
+        request.setAttribute("commentSize",userOrderComment.size());
         return "mall/order-detail";
     }
 

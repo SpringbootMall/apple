@@ -80,10 +80,15 @@
         </foreach>
     </update>
 
-    <update id="deleteByOrderNo">
-        update user_comment
-        set comment_is_deleted=1 where order_no = #{orderNo,jdbcType=BIGINT}
-    </update>
+<!--    <update id="deleteByOrderNo">-->
+<!--        update user_comment-->
+<!--        set comment_is_deleted=1 where order_no = #{orderNo,jdbcType=BIGINT}-->
+<!--    </update>-->
+
+    <delete id="deleteByOrderNo" parameterType="java.lang.Long">
+    delete from user_comment
+    where order_no = #{orderNo,jdbcType=BIGINT}
+    </delete>
 
     <insert id="insert" parameterType="com.apple.mall.entity.ShopUserComment">
     insert into user_comment (order_no, goods_id, user_id,
