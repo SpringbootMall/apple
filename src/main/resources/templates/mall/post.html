@@ -1,0 +1,116 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mall/header::head-fragment('NewBee商城-搜索','search')">
+</head>
+<link rel="stylesheet" th:href="@{/admin/plugins/sweetalert/sweetalert.css}"/>
+<style type="text/css">
+    .like{ font-size:22px;  color:#ccc; cursor:pointer;}
+    .cs{color:#f00;}
+    body{
+        font-size: 20px;
+        font-weight:700;
+        color: #1baeae;
+    }
+</style>
+<body>
+<header th:replace="mall/header::header-fragment"></header>
+<!-- nav -->
+<nav th:replace="mall/header::nav-fragment"></nav>
+<div align="center">
+    <textarea rows="8" id="text" style="width: 500px;"></textarea><br>
+    <button onclick="qwe()">发布</button><br>
+    <hr size="6" color="red">
+</div>
+<div style="margin-left:80px;margin-right:80px  ">
+<div>
+    <th:block th:each="post : ${posts}">
+        <div>
+            <br>
+            <a th:text="${post.user}"></a>&emsp;&emsp;&emsp;&emsp;
+            <a th:text="${post.postTime}"></a><hr><br><br>
+            <a th:text="${post.postContent}"></a><br><br><hr>
+            <div align="right">
+            <a th:id="'id'+${post.postId}" th:text="${post.thumbNumber}"></a>
+            <a class="like" th:onclick="a([[${post.postId}]])">&#10084;</a><br>
+                <hr size="6" color="#1baeae">
+            </div>
+        </div>
+    </th:block>
+</div>
+</div>
+
+<div th:replace="mall/footer::footer-fragment"></div>
+<script>
+    function a(id) {
+        var formData = new FormData();
+        formData.append('id', id);
+        $.ajax({
+            type: "POST",
+            url: "/addOne",
+            data: formData,
+            processData: false,// 不处理数据
+            contentType: false, // 不设置内容类型
+            async: true,
+            dataType: "json",
+            success:function (result) {
+                    document.getElementById("id"+id).innerText =result;
+
+        }
+           })
+    }
+
+</script>
+<script typet="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js">
+</script>
+<script>
+    $(function () {
+        $(".like").click(function () {
+            $(this).addClass('cs');
+        })
+    })
+</script>
+<script>
+    function qwe() {
+        var content = document.getElementById("text").value;
+        var formData = new FormData();
+        formData.append('content', content);
+        $.ajax({
+            type: "POST",
+            url: "/add",
+            data: formData,
+            processData: false,// 不处理数据
+            contentType: false, // 不设置内容类型
+            async: true,
+            dataType: "json",
+            success:function (result) {
+                if (result) {
+
+                    swal({
+                        title: "发布成功",
+                        text: "确认框",
+                        icon: "success",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then((flag) => {
+                        if(flag) {
+                            window.location.reload();
+                        }
+                    }
+                );
+                } else {
+                    swal("操作失败", {
+                        icon: "error",
+                    });
+                }
+
+        }
+
+            })
+
+
+    }
+</script>
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/mall/js/search.js}" type="text/javascript"></script>
+</body>
+</html>

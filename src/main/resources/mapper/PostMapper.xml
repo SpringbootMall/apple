@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.apple.mall.dao.PostMapper">
+
+    <resultMap id="BaseResultMap" type="com.apple.mall.entity.Post">
+        <result column="post_id" jdbcType="INTEGER" property="postId" />
+        <result column="user" jdbcType="VARCHAR" property="user" />
+        <result column="post_content" jdbcType="VARCHAR" property="postContent" />
+        <result column="thumb_number" jdbcType="INTEGER" property="thumbNumber" />
+        <result column="post_time" jdbcType="VARCHAR" property="postTime" />
+    </resultMap>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select * from post_info
+    </select>
+
+    <insert id="add" parameterType="com.apple.mall.entity.Post"
+            keyProperty="postId" useGeneratedKeys="true">
+		INSERT INTO post_info
+		(
+		post_id,user,post_content,thumb_number,post_time
+		)
+		VALUES (
+		#{postId,jdbcType=INTEGER},
+		#{user, jdbcType=VARCHAR},
+		#{postContent, jdbcType=VARCHAR},
+		#{thumbNumber, jdbcType=INTEGER},
+		#{postTime, jdbcType=VARCHAR}
+		)
+		</insert>
+
+	<update id="addOne" parameterType="Integer">
+	update post_info
+	set thumb_number=thumb_number+'1'
+	where post_id=#{id}
+	</update>
+
+	<select id="find" resultMap="BaseResultMap">
+		select *
+		from  post_info where post_id=#{id}
+	</select>
+
+
+
+</mapper>

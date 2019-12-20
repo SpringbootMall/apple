@@ -276,4 +276,9 @@
 
         where order_no = #{orderNo,jdbcType=BIGINT} and goods_id = #{goodsId,jdbcType=BIGINT}
   </update>
+
+    <select id="findComment" resultMap="BaseResultMap">
+        select * from user_comment
+        where  goods_id=#{id jdbcType=BIGINT}
+    </select>
 </mapper>

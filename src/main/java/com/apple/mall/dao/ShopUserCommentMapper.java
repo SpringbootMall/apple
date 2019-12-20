@@ -32,4 +32,6 @@ public interface ShopUserCommentMapper {
     int deleteBatch(List<Long> ids);
 
     int deleteByOrderNo(@Param("orderNo") Long orderNo);
+
+    List<ShopUserComment> findComment(Long id);
 }

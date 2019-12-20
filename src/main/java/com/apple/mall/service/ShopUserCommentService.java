@@ -71,4 +71,6 @@ public interface ShopUserCommentService {
      * @return
      */
     int deleteByOrderNo(Long orderNo);
+
+    List<ShopUserComment> findComment(Long id);
 }

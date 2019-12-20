@@ -103,4 +103,9 @@ public class ShopUserCommentServiceImpl implements ShopUserCommentService {
         return shopUserCommentMapper.selectByOrderNo(orderNo);
     }
 
+    @Override
+    public List<ShopUserComment> findComment(Long id){
+        return shopUserCommentMapper.findComment(id);
+    }
+
 }
