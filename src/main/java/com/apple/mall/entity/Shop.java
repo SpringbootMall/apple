@@ -2,7 +2,7 @@ package com.apple.mall.entity;
 
 public class Shop {
 
-    private int shopId;
+    private Long shopId;
 
     private String shopName;
 
@@ -54,11 +54,11 @@ public class Shop {
         this.shopIntro = shopIntro;
     }
 
-    public int getShopId() {
+    public Long getShopId() {
         return shopId;
     }
 
-    public void setShopId(int shopId) {
+    public void setShopId(Long shopId) {
         this.shopId = shopId;
     }
 

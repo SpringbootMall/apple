@@ -69,7 +69,7 @@ public interface GoodsService {
     /****首页查询商品*****/
     List<Goods> searchPage(String keyword);
     /********商店商品**************/
-    List<Goods> findgoods(int id);
+    List<Goods> findgoods(Long id);
 
     List<Goods> findre(String tag);
 

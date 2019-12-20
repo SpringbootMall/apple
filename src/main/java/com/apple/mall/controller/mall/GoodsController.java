@@ -52,7 +52,7 @@ public class GoodsController {
     }
 
     @GetMapping("/shop")
-    public String shop(int id, Model model){
+    public String shop(Long id, Model model){
         List<Goods>goods = goodsService.findgoods(id);
         Shop shop = shopService.shop(id);
         model.addAttribute("goods",goods);

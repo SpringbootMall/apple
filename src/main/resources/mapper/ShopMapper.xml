@@ -5,7 +5,7 @@
 <mapper namespace="com.apple.mall.dao.ShopMapper">
 
     <resultMap id="BaseResultMap" type="com.apple.mall.entity.Shop">
-        <result column="shop_id" jdbcType="INTEGER" property="shopId" />
+        <result column="shop_id" jdbcType="BIGINT" property="shopId" />
         <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
         <result column="shop_owner" jdbcType="VARCHAR" property="shopOwner" />
         <result column="shop_category" jdbcType="VARCHAR" property="shopCategory" />

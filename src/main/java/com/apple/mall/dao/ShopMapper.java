@@ -11,7 +11,7 @@ public interface ShopMapper {
 
     List<Shop> findshop(String shopName);
 
-    Shop shop(int id);
+    Shop shop(Long id);
 
     List<Shop> FindAllShopsWithSellerId(long sellerId);
 

@@ -44,7 +44,7 @@ public interface GoodsMapper {
     /*********查询商品*************/
     List<Goods> searchPage(String keyword);
 
-    List<Goods> findgoods(int id);
+    List<Goods> findgoods(Long id);
 
     //  宋中正
     List<Goods> ListGood();

@@ -20,7 +20,7 @@ public class ShopService {
         return shopMapper.findshop(shopName);
     }
 
-    public Shop shop(int id){
+    public Shop shop(Long id){
 
         return shopMapper.shop(id);
     }

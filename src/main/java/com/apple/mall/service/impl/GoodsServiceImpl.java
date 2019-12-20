@@ -105,7 +105,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public List<Goods> findgoods(int id){
+    public List<Goods> findgoods(Long id){
         return goodsMapper.findgoods(id);
     }
 
