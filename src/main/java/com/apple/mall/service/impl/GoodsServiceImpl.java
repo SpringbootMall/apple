@@ -108,4 +108,44 @@ public class GoodsServiceImpl implements GoodsService {
     public List<Goods> findgoods(int id){
         return goodsMapper.findgoods(id);
     }
+
+    //宋中正
+    @Override
+    public List<Goods> ListGood() {
+        return goodsMapper.ListGood();
+    }
+
+    @Override
+    public int FindGoodWithId(String goodsId) {
+        return goodsMapper.FindGoodWithId(goodsId);
+    }
+
+    @Override
+    public Goods InsertGood(Goods good) {
+        goodsMapper.InsertGood(good);
+        return good;
+    }
+
+    @Override
+    public int DeleteGood(String goodsId) {
+        return goodsMapper.DeleteGood(goodsId);
+    }
+
+    @Override
+    public int UpdateGood(Goods Good) {
+        return goodsMapper.UpdateGood(Good);
+    }
+
+    @Override
+    public List<Goods> FindGoodWithStoreId(int goodsId) {
+        return goodsMapper.FindGoodWithStoreId(goodsId);
+    }
+
+    @Override
+    public PageResult getShopGoodsPage(PageQueryUtil pageUtil,int shopId) {
+        List<Goods> goodsList = goodsMapper.ListGoodsByShopId(shopId);
+        int total = goodsMapper.getTotalShopGoods(shopId);
+        PageResult pageResult = new PageResult(goodsList, total, pageUtil.getLimit(), pageUtil.getPage());
+        return pageResult;
+    }
 }

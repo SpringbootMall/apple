@@ -367,4 +367,13 @@ public class OrderServiceImpl implements OrderService {
         }
         return null;
     }
+
+    //szz
+    @Override
+    public PageResult getShopOrdersPage(PageQueryUtil pageUtil,int shopId) {
+        List<Order> orders = orderMapper.findShopOrderList(shopId);
+        int total = orderMapper.getTotalShopOrders(shopId);
+        PageResult pageResult = new PageResult(orders, total, pageUtil.getLimit(), pageUtil.getPage());
+        return pageResult;
+    }
 }

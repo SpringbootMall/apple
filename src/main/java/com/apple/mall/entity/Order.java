@@ -26,9 +26,20 @@ public class Order {
     private String userAddress;
 
     private Byte isDeleted;
+
     private String userName;
 
     private String userPhone;
+
+    private int shopId;
+
+    public int getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(int shopId) {
+        this.shopId = shopId;
+    }
 
     public String getUserName() {
         return userName;
@@ -174,6 +185,7 @@ public class Order {
         sb.append(", isDeleted=").append(isDeleted);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", shopId=").append(shopId);
         sb.append("]");
         return sb.toString();
     }

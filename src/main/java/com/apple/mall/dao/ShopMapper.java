@@ -13,4 +13,6 @@ public interface ShopMapper {
 
     Shop shop(int id);
 
+    List<Shop> FindAllShopsWithSellerId(long sellerId);
+
 }

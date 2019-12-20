@@ -12,6 +12,7 @@
         <result column="shop_creattime" jdbcType="VARCHAR" property="shopCreatTime" />
         <result column="shop_image" jdbcType="VARCHAR" property="shopImage" />
         <result column="shop_intro" jdbcType="VARCHAR" property="shopIntro" />
+        <result column="seller_id" jdbcType="BIGINT" property="sellerId" />
     </resultMap>
 
 
@@ -23,5 +24,10 @@
     <select id="shop" resultMap="BaseResultMap">
         select * from shops_info
         where shop_id=#{id jdbcType=INTEGER}
+    </select>
+
+    <select id="FindAllShopsWithSellerId" resultMap="BaseResultMap">
+        select * from shops_info
+        where seller_id=#{sellerId jdbcType=BIGINT}
     </select>
 </mapper>

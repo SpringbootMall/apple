@@ -46,4 +46,21 @@ public interface GoodsMapper {
 
     List<Goods> findgoods(int id);
 
+    //  宋中正
+    List<Goods> ListGood();
+    int FindGoodWithId(String goodsId);
+    void InsertGood(Goods good);
+    int DeleteGood(String goodsId);
+    int UpdateGood(Goods Good);
+
+    List<Goods> FindGoodWithStoreId(int shopId);
+
+    /*********根据店铺打印商品信息*************/
+//    List<Goods> findNewBeeMallGoodsList(PageQueryUtil pageUtil);
+    List<Goods> ListGoodsByShopId(int shopId);
+
+    /*********获取商品数量信息*************/
+//    int getTotalNewBeeMallGoods(PageQueryUtil pageUtil);
+    int getTotalShopGoods(int shopId);
+
 }

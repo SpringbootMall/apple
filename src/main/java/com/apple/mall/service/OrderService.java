@@ -106,4 +106,8 @@ public interface OrderService {
     String paySuccess(String orderNo, int payType);
 
     List<OrderItemVO> getOrderItems(Long id);
+
+    //szz
+    PageResult getShopOrdersPage(PageQueryUtil pageUtil,int shopId);
+//    PageResult getNewBeeMallOrdersPage(PageQueryUtil pageUtil);
 }

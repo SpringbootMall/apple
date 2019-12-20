@@ -17,6 +17,7 @@
         <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="shop_id" jdbcType="INTEGER" property="shopId"/>
     </resultMap>
     <sql id="Base_Column_List">
     order_id, order_no, user_id, total_price, pay_status, pay_type, pay_time, order_status,
@@ -291,4 +292,15 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where order_id = #{orderId,jdbcType=BIGINT}
   </update>
+
+    <select id="findShopOrderList" resultMap="BaseResultMap">
+       select *
+        from mall_order
+        where shop_id=#{shopId,jdbcType=BIGINT}
+    </select>
+
+    <select id="getTotalShopOrders" resultType="INTEGER">
+        select count(*) from mall_order
+        where shop_id=#{shopId,jdbcType=BIGINT}
+    </select>
 </mapper>

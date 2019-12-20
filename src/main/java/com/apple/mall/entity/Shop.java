@@ -20,6 +20,16 @@ public class Shop {
 
     private String shopIntro;
 
+    private int sellerId;
+
+    public int getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(int sellerId) {
+        this.sellerId = sellerId;
+    }
+
     public Byte getLockedFlag() {
         return lockedFlag;
     }
@@ -101,6 +111,7 @@ public class Shop {
                 ", shopCategory='" + shopCategory + '\'' +
                 ", shopCreatTime='" + shopCreatTime + '\'' +
                 ", shopImage='" + shopImage + '\'' +
+                ", sellerId='" + sellerId + '\'' +
                 '}';
     }
 }

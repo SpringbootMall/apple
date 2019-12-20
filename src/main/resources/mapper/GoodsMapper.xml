@@ -388,4 +388,22 @@
      select  * from goods_info
      where shop_id=#{id}
     </select>
+
+    <select id="ListGoodsByShopId"  resultMap="BaseResultMap">
+       select *
+        from goods_info
+        where shop_id=#{shopId,jdbcType=BIGINT}
+    </select>
+
+    <select id="getTotalShopGoods" resultType="INTEGER">
+        select count(*) from goods_info
+        where shop_id=#{shopId,jdbcType=BIGINT}
+    </select>
+
+
+    <select id="FindGoodWithStoreId" resultMap="BaseResultMap">
+        select *
+        from goods_info
+        where shop_id=#{shopId,jdbcType=BIGINT}
+    </select>
 </mapper>

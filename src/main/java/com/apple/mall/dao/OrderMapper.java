@@ -34,4 +34,10 @@ public interface OrderMapper {
     int closeOrder(@Param("orderIds") List<Long> orderIds, @Param("orderStatus") int orderStatus);
 
     int checkDone(@Param("orderIds") List<Long> asList);
+
+    //szz
+//    List<Order> findNewBeeMallOrderList(PageQueryUtil pageUtil);
+//    int getTotalNewBeeMallOrders(PageQueryUtil pageUtil);
+    List<Order> findShopOrderList(int shopId);
+    int getTotalShopOrders(int shopId);
 }

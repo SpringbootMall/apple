@@ -72,4 +72,20 @@ public interface GoodsService {
     List<Goods> findgoods(int id);
 
     List<Goods> findre(String tag);
+
+    //宋中正
+    public List<Goods> ListGood();
+
+    public int FindGoodWithId(String goodsId);
+
+    public Goods InsertGood(Goods good);
+
+    public int DeleteGood(String goodsId);
+
+    public int UpdateGood(Goods Good);
+
+    public List<Goods> FindGoodWithStoreId(int goodsId);
+
+    //    PageResult getNewBeeMallGoodsPage(PageQueryUtil pageUtil);
+    PageResult getShopGoodsPage(PageQueryUtil pageUtil,int shopId);
 }

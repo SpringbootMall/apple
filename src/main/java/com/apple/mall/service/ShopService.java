@@ -25,5 +25,9 @@ public class ShopService {
         return shopMapper.shop(id);
     }
 
+    public List<Shop> FindAllShopsWithSellerId(long sellerId) {
+        return shopMapper.FindAllShopsWithSellerId(sellerId);
+    }
+
 
 }
