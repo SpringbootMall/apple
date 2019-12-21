@@ -29,7 +29,11 @@ public interface ShopUserCommentMapper {
 
     int updateByPrimaryKey(ShopUserComment record);
 
+    int updateByOrderNo(ShopUserComment record);
+
     int deleteBatch(List<Long> ids);
 
     int deleteByOrderNo(@Param("orderNo") Long orderNo);
+
+    List<ShopUserComment> findComment(Long id);
 }

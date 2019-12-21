@@ -50,6 +50,7 @@ public class OrderController {
         }
         request.setAttribute("orderDetailVO", orderDetailVO);
         request.setAttribute("userOrderComment", userOrderComment);
+        request.setAttribute("commentSize",userOrderComment.size());
         return "mall/order-detail";
     }
 
@@ -119,6 +120,21 @@ public class OrderController {
         shopUserComment.setUserId(user.getUserId());
         System.out.println(shopUserComment.getOrderNo());
         String commentResult = shopUserCommentService.saveShopUserComment(shopUserComment);
+        if (ServiceResultEnum.SUCCESS.getResult().equals(commentResult)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult(commentResult);
+        }
+    }
+
+    @PostMapping("/reply-comment")
+    @ResponseBody
+    public Result replyComment(@RequestBody ShopUserComment shopUserComment){
+
+
+        System.out.println(shopUserComment.getOrderNo());
+        System.out.println(shopUserComment.getStoreReply());
+        String commentResult = shopUserCommentService.saveReplyByOrderNo(shopUserComment);
         if (ServiceResultEnum.SUCCESS.getResult().equals(commentResult)) {
             return ResultGenerator.genSuccessResult();
         } else {

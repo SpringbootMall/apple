@@ -14,6 +14,15 @@ public interface ShopUserCommentService {
      */
     String saveShopUserComment(ShopUserComment shopUserComment);
 
+
+    /**
+     * 保存评论
+     *
+     * @param shopUserComment
+     * @return
+     */
+    String saveReplyByOrderNo(ShopUserComment shopUserComment);
+
     /**
      * 修改评论
      *
@@ -71,4 +80,6 @@ public interface ShopUserCommentService {
      * @return
      */
     int deleteByOrderNo(Long orderNo);
+
+    List<ShopUserComment> findComment(Long id);
 }

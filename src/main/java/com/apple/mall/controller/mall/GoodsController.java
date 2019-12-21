@@ -5,9 +5,11 @@ import com.apple.mall.controller.vo.GoodsDetailVO;
 import com.apple.mall.controller.vo.SearchPageCategoryVO;
 import com.apple.mall.entity.Goods;
 import com.apple.mall.entity.Shop;
+import com.apple.mall.entity.ShopUserComment;
 import com.apple.mall.service.CategoryService;
 import com.apple.mall.service.GoodsService;
 import com.apple.mall.service.ShopService;
+import com.apple.mall.service.ShopUserCommentService;
 import com.apple.mall.util.BeanUtil;
 import com.apple.mall.util.PageQueryUtil;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,8 @@ public class GoodsController {
     private GoodsService goodsService;
     @Resource
     ShopService shopService;
+    @Resource
+    ShopUserCommentService shopUserCommentService;
 
     @GetMapping({"/search", "/search.html"})
     public String searchPage(String keyword, Model model, HttpServletRequest request) {
@@ -42,17 +46,19 @@ public class GoodsController {
     }
 
     @GetMapping("/detail")
-    public String detailPage(Long goodsId, HttpServletRequest request) {
+    public String detailPage(Long goodsId, HttpServletRequest request,Model model) {
         if (goodsId < 1) {
             return "error/error_5xx";
         }
         Goods goods = goodsService.getNewBeeMallGoodsById(goodsId);
+        List<ShopUserComment>comments = shopUserCommentService.findComment(goodsId);
         request.setAttribute("goodsDetail", goods);
+        model.addAttribute("comments",comments);
         return "mall/detail";
     }
 
     @GetMapping("/shop")
-    public String shop(int id, Model model){
+    public String shop(Long id, Model model){
         List<Goods>goods = goodsService.findgoods(id);
         Shop shop = shopService.shop(id);
         model.addAttribute("goods",goods);

@@ -4,8 +4,10 @@ import com.apple.mall.common.Constants;
 import com.apple.mall.common.ServiceResultEnum;
 import com.apple.mall.controller.vo.ShoppingCartItemVO;
 import com.apple.mall.dao.GoodsMapper;
+import com.apple.mall.dao.ShopMapper;
 import com.apple.mall.dao.ShoppingCartItemMapper;
 import com.apple.mall.entity.Goods;
+import com.apple.mall.entity.Shop;
 import com.apple.mall.entity.ShoppingCartItem;
 import com.apple.mall.service.ShoppingCartService;
 import com.apple.mall.util.BeanUtil;
@@ -25,6 +27,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Autowired
     private GoodsMapper goodsMapper;
+
+    @Autowired
+    private ShopMapper shopMapper;
 
     //todo 修改session中购物项数量
 
@@ -105,11 +110,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                     Goods goodsTemp = newBeeMallGoodsMap.get(shoppingCartItem.getGoodsId());
                     shoppingCartItemVO.setGoodsCoverImg(goodsTemp.getGoodsCoverImg());
                     String goodsName = goodsTemp.getGoodsName();
+                    Long shopId = goodsTemp.getShopId();
+                    Shop shop =  shopMapper.shop(shopId);
                     // 字符串过长导致文字超出的问题
                     if (goodsName.length() > 28) {
                         goodsName = goodsName.substring(0, 28) + "...";
                     }
                     shoppingCartItemVO.setGoodsName(goodsName);
+                    shoppingCartItemVO.setShopId(shopId);
+                    shoppingCartItemVO.setShopName(shop.getShopName());
                     shoppingCartItemVO.setSellingPrice(goodsTemp.getSellingPrice());
                     shoppingCartItemVOS.add(shoppingCartItemVO);
                 }

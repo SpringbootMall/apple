@@ -49,6 +49,13 @@ public class ShopUserCommentServiceImpl implements ShopUserCommentService {
     }
 
     @Override
+    public String saveReplyByOrderNo(ShopUserComment shopUserComment) {
+        if (shopUserCommentMapper.updateByOrderNo(shopUserComment)>0)
+            return ServiceResultEnum.SUCCESS.getResult();
+        return ServiceResultEnum.DB_ERROR.getResult();
+    }
+
+    @Override
     public String updateShopUserComment(ShopUserComment shopUserComment) {
         ShopUserComment temp = shopUserCommentMapper.selectByUserIdAndGoodsId(shopUserComment.getUserId(), shopUserComment.getGoodsId());
         if (temp != null) {
@@ -101,6 +108,11 @@ public class ShopUserCommentServiceImpl implements ShopUserCommentService {
     @Override
     public List<ShopUserComment> getShopUserCommentByOrderNo(Long orderNo) {
         return shopUserCommentMapper.selectByOrderNo(orderNo);
+    }
+
+    @Override
+    public List<ShopUserComment> findComment(Long id){
+        return shopUserCommentMapper.findComment(id);
     }
 
 }

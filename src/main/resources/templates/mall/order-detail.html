@@ -161,11 +161,14 @@
                                     </tbody>
                                 </table>
                             </div>
+
+                            <th:block th:if="${commentSize != 0}">
                             <th:block th:if="${orderDetailVO.orderStatus==5}">
                                 <table>
                                     <tr class="col col-eva">
                                         <td>商品序列</td>
                                         <td>我的评价</td>
+                                        <td>追加评价</td>
                                         <td>物品评分</td>
                                         <td>服务评分</td>
                                         <td>物流评分</td>
@@ -174,24 +177,26 @@
                                     <th:block th:each="item,itemStat: ${userOrderComment}">
                                         <tr class="col col-eva">
                                             <td width="80" th:text="'商品'+${itemStat.count}"> </td>
-                                            <!--                                    <td width="160px">我的评价:</td>-->
                                             <td><div  th:text="${item.userEvaluation}"></div></td>
-                                            <!--                                    <td width="80x">物品评分</td>-->
+                                            <td><div  th:text="${item.addEvaluation}"></div></td>
                                             <td width="50px"><div  th:text="${item.goodsScore}"></div></td><br>
-                                            <!--                                    <td width="80px">服务评分</td>-->
                                             <td width="50px"><div  th:text="${item.serviceScore}"></div></td><br>
-                                            <!--                                    <td width="80px">物流评分</td>-->
                                             <td width="50px"><div  th:text="${item.logisticsScore}"></div></td>
-                                            <!--                                    <td width="180px">评价日期</td>-->
                                             <td><div  th:text="${item.commentCreateTime}"></div></td>
-                                            <td rowspan="2"><a href="##" th:onclick="deleteComment([[${item.orderNo}]])">X</a></td>
+<!--                                            <td rowspan="2"><a href="##" th:onclick="deleteComment([[${item.orderNo}]])">X</a></td>-->
                                         </tr>
-
                                     </th:block>
-
-
+                                    <tr><td colspan="7" align="center"><button type="button" class="btn btn-small btn-warning" th:onclick="deleteComment([[${orderDetailVO.orderNo}]])">删除此订单评价</button> </td></tr>
                                 </table>
                             </th:block>
+                            </th:block>
+
+                            <th:block th:if="${commentSize == 0}">
+                                <th:block th:if="${orderDetailVO.orderStatus==5}">
+                                    <div style="color: red"> 此订单评价已删除</div>
+                                </th:block>
+                            </th:block>
+
                             <div id="editAddr" class="order-detail-info">
                                 <h3>收货信息</h3>
                                 <table class="info-table">
@@ -420,7 +425,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-
+                                        <tr><td style="color: red">注意：打分将会覆盖原打分！</td></tr>
                                         <tr>
                                             <td>
                                                 <button type="button" th:onclick="commentAgain([[${item.goodsId}]])" class="btn btn-small btn-primary" title="提交评价">提交评价</button>
