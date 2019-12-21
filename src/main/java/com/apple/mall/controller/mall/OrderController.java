@@ -8,6 +8,7 @@ import com.apple.mall.controller.vo.ShoppingCartItemVO;
 import com.apple.mall.controller.vo.UserVO;
 import com.apple.mall.entity.Order;
 import com.apple.mall.entity.ShopUserComment;
+import com.apple.mall.service.GoodsService;
 import com.apple.mall.service.OrderService;
 import com.apple.mall.service.ShopUserCommentService;
 import com.apple.mall.service.ShoppingCartService;
@@ -39,6 +40,8 @@ public class OrderController {
     private OrderService newBeeMallOrderService;
     @Resource
     private ShopUserCommentService shopUserCommentService;
+    @Resource
+    private GoodsService goodsService;
 
     @GetMapping("/orders/{orderNo}")
     public String orderDetailPage(HttpServletRequest request, @PathVariable("orderNo") String orderNo, HttpSession httpSession) {
@@ -69,10 +72,12 @@ public class OrderController {
         return "mall/my-orders";
     }
 
-    @GetMapping("/saveOrder")
-    public String saveOrder(HttpSession httpSession) {
+    @GetMapping("/saveOrder/{shopId}")
+    public String saveOrder(@PathVariable("shopId") String shopId, HttpSession httpSession) {
+        System.out.println(shopId);
         UserVO user = (UserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        List<ShoppingCartItemVO> myShoppingCartItems = newBeeMallShoppingCartService.getMyShoppingCartItems(user.getUserId());
+        Long shopIdTemp = Long.valueOf(shopId);
+        List<ShoppingCartItemVO> myShoppingCartItems = newBeeMallShoppingCartService.getMyShoppingCartItemsByShopId(user.getUserId(),shopIdTemp);
         if (StringUtils.isEmpty(user.getAddress().trim())) {
             //无收货地址
             Exception.fail(ServiceResultEnum.NULL_ADDRESS_ERROR.getResult());
@@ -115,10 +120,10 @@ public class OrderController {
     @PostMapping("/shop-comment")
     @ResponseBody
     public Result addUserComment(@RequestBody ShopUserComment shopUserComment,HttpSession httpSession){
-
+        Long storeId = goodsService.getNewBeeMallGoodsById(shopUserComment.getGoodsId()).getShopId();
         UserVO user = (UserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         shopUserComment.setUserId(user.getUserId());
-        System.out.println(shopUserComment.getOrderNo());
+        shopUserComment.setStoreId(storeId);
         String commentResult = shopUserCommentService.saveShopUserComment(shopUserComment);
         if (ServiceResultEnum.SUCCESS.getResult().equals(commentResult)) {
             return ResultGenerator.genSuccessResult();
@@ -130,10 +135,6 @@ public class OrderController {
     @PostMapping("/reply-comment")
     @ResponseBody
     public Result replyComment(@RequestBody ShopUserComment shopUserComment){
-
-
-        System.out.println(shopUserComment.getOrderNo());
-        System.out.println(shopUserComment.getStoreReply());
         String commentResult = shopUserCommentService.saveReplyByOrderNo(shopUserComment);
         if (ServiceResultEnum.SUCCESS.getResult().equals(commentResult)) {
             return ResultGenerator.genSuccessResult();
@@ -144,18 +145,26 @@ public class OrderController {
 
     @PostMapping("/uploadImg")
     @ResponseBody
-    public Result uploadImg(@RequestParam("file") MultipartFile file, @RequestParam("orderNo") Long orderNo, @RequestParam("goodsId") Long goodsId){
+    public Result uploadImg(@RequestParam("file") MultipartFile file, @RequestParam("orderNo") Long orderNo, @RequestParam("goodsId") Long goodsId,HttpSession httpSession){
         ShopUserComment shopUserComment = new ShopUserComment();
         System.out.println(orderNo);
+        Long storeId = goodsService.getNewBeeMallGoodsById(goodsId).getShopId();
+
+        UserVO user = (UserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        //图片保存名
+        String imgPath = user.getUserId().toString() + "To" + goodsId.toString() + file.getOriginalFilename().substring(file.getOriginalFilename().length()-4);
         String submitImgResult = null;
         try {
             byte[] bytes = file.getBytes();
-            Path path = Paths.get("upload/images/"+file.getOriginalFilename());
+            Path path = Paths.get("upload/images/"+imgPath);
             Files.write(path, bytes);
             shopUserComment.setSubmitImg(path.toString());
             shopUserComment.setOrderNo(orderNo);
             shopUserComment.setGoodsId(goodsId);
-            submitImgResult= shopUserCommentService.saveShopUserComment(shopUserComment);
+            shopUserComment.setUserId(user.getUserId());
+            shopUserComment.setStoreId(storeId);
+
+            submitImgResult= shopUserCommentService.saveShopUserCommentImg(shopUserComment);
             return ResultGenerator.genSuccessResult();
         } catch (IOException e) {
             e.printStackTrace();

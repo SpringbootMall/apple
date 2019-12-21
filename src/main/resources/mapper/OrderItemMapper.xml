@@ -10,10 +10,11 @@
         <result column="selling_price" jdbcType="INTEGER" property="sellingPrice"/>
         <result column="goods_count" jdbcType="INTEGER" property="goodsCount"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="shop_id" jdbcType="BIGINT" property="shopId"/>
     </resultMap>
     <sql id="Base_Column_List">
     order_item_id, order_id, goods_id, goods_name, goods_cover_img, selling_price, goods_count, 
-    create_time
+    create_time,shop_id
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
@@ -44,22 +45,22 @@
     <insert id="insertBatch" parameterType="com.apple.mall.entity.OrderItem">
         insert into order_item (order_id, goods_id,
         goods_name, goods_cover_img, selling_price,
-        goods_count)
+        goods_count, shop_id)
         values
         <foreach collection="orderItems" item="orderItem" separator=",">
             (#{orderItem.orderId,jdbcType=BIGINT}, #{orderItem.goodsId,jdbcType=BIGINT},
             #{orderItem.goodsName,jdbcType=VARCHAR}, #{orderItem.goodsCoverImg,jdbcType=VARCHAR},
             #{orderItem.sellingPrice,jdbcType=INTEGER},
-            #{orderItem.goodsCount,jdbcType=INTEGER})
+            #{orderItem.goodsCount,jdbcType=INTEGER},#{orderItem.shopId,jdbcType=INTEGER})
         </foreach>
     </insert>
     <insert id="insert" parameterType="com.apple.mall.entity.OrderItem">
     insert into order_item (order_item_id, order_id, goods_id,
       goods_name, goods_cover_img, selling_price,
-      goods_count, create_time)
+      goods_count, create_time, shop_id)
     values (#{orderItemId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT},
       #{goodsName,jdbcType=VARCHAR}, #{goodsCoverImg,jdbcType=VARCHAR}, #{sellingPrice,jdbcType=INTEGER},
-      #{goodsCount,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+      #{goodsCount,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{shopId,jdbcType=BIGINT})
   </insert>
     <insert id="insertSelective" parameterType="com.apple.mall.entity.OrderItem">
         insert into order_item
@@ -88,6 +89,9 @@
             <if test="createTime != null">
                 create_time,
             </if>
+            <if test="shopId != null">
+                shop_id,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="orderItemId != null">
@@ -113,6 +117,9 @@
             </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="shopId != null">
+                #{shopId,jdbcType=BIGINT},
             </if>
         </trim>
     </insert>
@@ -140,6 +147,9 @@
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
+            <if test="shopId != null">
+                shop_id = #{shopId,jdbcType=BIGINT},
+            </if>
         </set>
         where order_item_id = #{orderItemId,jdbcType=BIGINT}
     </update>
@@ -151,7 +161,8 @@
       goods_cover_img = #{goodsCoverImg,jdbcType=VARCHAR},
       selling_price = #{sellingPrice,jdbcType=INTEGER},
       goods_count = #{goodsCount,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      shop_id = #{shopId,jdbcType=BIGINT}
     where order_item_id = #{orderItemId,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -17,15 +17,15 @@ public class ShoppingCartItem {
 
     private Date updateTime;
 
-    private int shopId;
+    private Long shopId;
 
     private String shopName;
 
-    public int getShopId() {
+    public Long getShopId() {
         return shopId;
     }
 
-    public void setShopId(int shopId) {
+    public void setShopId(Long shopId) {
         this.shopId = shopId;
     }
 

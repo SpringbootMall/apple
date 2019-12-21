@@ -14,6 +14,13 @@ public interface ShopUserCommentService {
      */
     String saveShopUserComment(ShopUserComment shopUserComment);
 
+    /**
+     * 保存评论图片
+     *
+     * @param shopUserComment
+     * @return
+     */
+    String saveShopUserCommentImg(ShopUserComment shopUserComment);
 
     /**
      * 保存评论

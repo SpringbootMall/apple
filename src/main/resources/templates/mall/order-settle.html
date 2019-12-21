@@ -20,11 +20,11 @@
                 <div class="uc-content-box order-view-box">
                     <div class="box-hd">
                         <h1 class="title">填写并核对订单信息</h1>
-                        <div class="more clearfix">
-                            <div class="actions">
-                                <a id="saveOrder" class="btn btn-small btn-primary" title="提交订单">提交订单</a>
-                            </div>
-                        </div>
+<!--                        <div class="more clearfix">-->
+<!--                            <div class="actions">-->
+<!--                                <a id="saveOrder" class="btn btn-small btn-primary" title="提交订单">提交订单</a>-->
+<!--                            </div>-->
+<!--                        </div>-->
                     </div>
                     <div class="box-bd">
                         <div class="uc-order-item uc-order-item-pay">
@@ -63,26 +63,25 @@
                                 <table class="order-items-table">
                                     <tbody>
                                     <th:block th:each="item : ${buyInOneShopVOList}">
-                                        <tr><td th:text="${item.shopName}"></td></tr>
-                                        shoppingCartItemVOs
+                                        <tr><td  style="font-size: 30px; font-family: 微软雅黑; " th:text="${item.shopName}"></td></tr>
                                         <th:block th:each="shoppingCartItemVO : ${item.shoppingCartItemVOs}">
                                         <tr>
                                             <td class="col col-thumb">
                                                 <div class="figure figure-thumb">
-                                                    <a target="_blank" th:href="@{'/goods/detail/'+${item.goodsId}}">
-                                                        <img th:src="@{${item.goodsCoverImg}}"
+                                                    <a target="_blank" th:href="@{'/goods/detail/'+${shoppingCartItemVO.goodsId}}">
+                                                        <img th:src="@{${shoppingCartItemVO.goodsCoverImg}}"
                                                              width="80" height="80" alt="">
                                                     </a>
                                                 </div>
                                             </td>
                                             <td class="col col-name">
                                                 <p class="name">
-                                                    <a target="_blank" th:href="@{'/goods/detail/'+${item.goodsId}}"
-                                                       th:text="${item.goodsName}">newbee</a>
+                                                    <a target="_blank" th:href="@{'/goods/detail/'+${shoppingCartItemVO.goodsId}}"
+                                                       th:text="${shoppingCartItemVO.goodsName}"></a>
                                                 </p>
                                             </td>
                                             <td class="col col-price"><p class="price"
-                                                                         th:text="${item.sellingPrice+'元 x '+item.goodsCount}">
+                                                                         th:text="${shoppingCartItemVO.sellingPrice+'元 x '+shoppingCartItemVO.goodsCount}">
                                                 1299元 × 1</p></td>
                                             <td class="col col-actions">
                                             </td>
@@ -90,9 +89,19 @@
 
                                     </th:block>
                                         <tr>
-                                            <th>商品总价：</th>
-                                            <td><span class="num" th:text="${item.price}+'.00'}">1299.00</span>元</td>
+                                            <th style="font-size: 20px; color: #1baeae;">商品总价：</th>
+                                            <td><span class="num" style="font-size: 20px;color: #1baeae;" th:text="${item.price}"></span>元</td>
                                         </tr>
+                                        <tr>
+                                            <td>
+                                            <div class="more clearfix">
+                                                <div class="actions">
+                                                    <button th:onclick="saveOrder([[${item.shopId}]])" id="saveOrder" style="float: right;" class="btn btn-small btn-primary" title="提交订单">提交订单</button>
+                                                </div>
+                                            </div>
+                                            </td>
+                                        </tr>
+                                        <tr><td><br></td></tr>
                                     </th:block>
                                     </tbody>
                                 </table>
@@ -246,7 +255,7 @@
 <script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
 <script th:src="@{/mall/js/bootstrap3.js}"></script>
 <script type="text/javascript">
-    $('#saveOrder').click(function () {
+    function saveOrder(shopId) {
         var userAddress = $(".user_address_label").html();
         if (userAddress == '' || userAddress == '无') {
             swal("请填写收货信息", {
@@ -260,8 +269,8 @@
             });
             return;
         }
-        window.location.href = '../saveOrder';
-    });
+        window.location.href = "../saveOrder/"+shopId;
+    };
 
     function openUpdateModal() {
         $('#personalInfoModal').modal('show');

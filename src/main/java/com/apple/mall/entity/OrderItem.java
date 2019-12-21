@@ -19,6 +19,16 @@ public class OrderItem {
 
     private Date createTime;
 
+    private Long shopId;
+
+    public Long getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(Long shopId) {
+        this.shopId = shopId;
+    }
+
     public Long getOrderItemId() {
         return orderItemId;
     }

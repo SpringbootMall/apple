@@ -46,4 +46,12 @@ public interface ShoppingCartService {
      * @return
      */
     List<ShoppingCartItemVO> getMyShoppingCartItems(Long newBeeMallUserId);
+
+    /**
+     * 获取我的购物车中一家店的列表数据
+     *
+     * @param newBeeMallUserId
+     * @return
+     */
+    List<ShoppingCartItemVO> getMyShoppingCartItemsByShopId(Long newBeeMallUserId,Long shopId);
 }

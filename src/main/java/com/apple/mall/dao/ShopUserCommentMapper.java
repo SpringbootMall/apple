@@ -27,6 +27,8 @@ public interface ShopUserCommentMapper {
 
     int updateByPrimaryKeySelective(ShopUserComment record);
 
+    int updateByPrimaryKeySelectiveImg(ShopUserComment record);
+
     int updateByPrimaryKey(ShopUserComment record);
 
     int updateByOrderNo(ShopUserComment record);

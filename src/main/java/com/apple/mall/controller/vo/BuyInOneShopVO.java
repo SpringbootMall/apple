@@ -1,6 +1,7 @@
 package com.apple.mall.controller.vo;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class BuyInOneShopVO {
     private double price;
@@ -41,5 +42,28 @@ public class BuyInOneShopVO {
 
     public void setShoppingCartItemVOs(ArrayList<ShoppingCartItemVO> shoppingCartItemVOs) {
         this.shoppingCartItemVOs = shoppingCartItemVOs;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BuyInOneShopVO that = (BuyInOneShopVO) o;
+        return Objects.equals(shopId, that.shopId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(shopId);
+    }
+
+    @Override
+    public String toString() {
+        return "BuyInOneShopVO{" +
+                "price=" + price +
+                ", shopName='" + shopName + '\'' +
+                ", shopId=" + shopId +
+                ", shoppingCartItemVOs=" + shoppingCartItemVOs +
+                '}';
     }
 }
