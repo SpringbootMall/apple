@@ -127,6 +127,21 @@ public class OrderController {
         }
     }
 
+    @PostMapping("/reply-comment")
+    @ResponseBody
+    public Result replyComment(@RequestBody ShopUserComment shopUserComment){
+
+
+        System.out.println(shopUserComment.getOrderNo());
+        System.out.println(shopUserComment.getStoreReply());
+        String commentResult = shopUserCommentService.saveReplyByOrderNo(shopUserComment);
+        if (ServiceResultEnum.SUCCESS.getResult().equals(commentResult)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult(commentResult);
+        }
+    }
+
     @PostMapping("/uploadImg")
     @ResponseBody
     public Result uploadImg(@RequestParam("file") MultipartFile file, @RequestParam("orderNo") Long orderNo, @RequestParam("goodsId") Long goodsId){

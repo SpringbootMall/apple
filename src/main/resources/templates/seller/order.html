@@ -106,6 +106,47 @@
             </div>
             <!-- /.modal -->
         </div>
+
+
+        <div class="content">
+            <!-- 模态框（Modal） -->
+            <div class="modal fade" id="orderReply" tabindex="-1" role="dialog"
+                 aria-labelledby="orderInfoModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h6 class="modal-title" id="orderReplyLabel">Modal</h6>
+                        </div>
+                        <div class="modal-body">
+                            <form id="###">
+                                <div class="form-group">
+                                    <div class="alert alert-danger" id="edit-error-msg2" style="display: none;">
+                                        错误信息展示栏。
+                                    </div>
+                                </div>
+                                <input type="hidden" id="orderNo">
+                                <div class="form-group">
+                                    <label for="reply" class="control-label">回复评价:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                    <input type="number" class="form-control" id="reply" name="totalPrice"
+                                           placeholder="请输入回评" required="true">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" id="saveReplyButton">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal -->
+        </div>
+
+
+
+
         <div class="content">
             <!-- 模态框（Modal） -->
             <div class="modal fade" id="expressInfoModal" tabindex="-1" role="dialog"

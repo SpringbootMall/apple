@@ -50,7 +50,7 @@ $(function () {
                 "<a href=\'##\' onclick=openExpressInfo(" + rowObject.rowId + ")>查看收件人信息</a>";
     }
 
-    function orderStatusFormatter(cellvalue) {
+    function orderStatusFormatter(cellvalue, rowObject) {
         //订单状态:0.待支付 1.已支付 2.配货完成 3:出库成功 4.交易成功 -1.手动关闭 -2.超时关闭 -3.商家关闭
         if (cellvalue == 0) {
             return "待支付";
@@ -68,7 +68,7 @@ $(function () {
             return "交易成功";
         }
         if (cellvalue == 5) {
-            return "评价完成"+"<br>"+"<a href=\'##\'>回复评价</a>";
+            return "评价完成"+"<br>"+"<a href=\'###\' onclick=toReply()>回复评价</a>";
         }
         if (cellvalue == -1) {
             return "手动关闭";
@@ -371,6 +371,120 @@ function closeOrder() {
 )
     ;
 }
+
+
+
+
+function toReply() {
+    reset();
+    var id = getSelectedRow();
+    if (id == null) {
+        return;
+    }
+    var rowData = $("#jqGrid").jqGrid("getRowData", id);
+    var orderNos = rowData.orderNo;
+
+    $('#orderReplyLabel').html('回复评价');
+    $('#orderReply').modal('show');
+    // $("#orderId").val(id);
+    $("#orderNo").val(orderNos);
+}
+
+$('#saveReplyButton').click(function () {
+
+
+    var reply = $("#reply").val();
+    var orderNo = $("#orderNo").val();
+    var url = '/reply-comment';
+    var data = {
+        "orderNo": orderNo,
+        "storeReply": reply
+    };
+    $.ajax({
+        type: 'POST',//方法类型
+        url: url,
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (result) {
+            if (result.resultCode == 200) {
+                $('#orderInfoModal').modal('hide');
+                swal("回复成功", {
+                    icon: "success",
+                });
+                reload();
+            } else {
+                $('#orderReply').modal('hide');
+                swal(result.message, {
+                    icon: "error",
+                });
+            }
+            ;
+        },
+        error: function () {
+            swal("操作失败", {
+                icon: "error",
+            });
+        }
+    });
+});
+// /**
+//  * 订单拣货完成
+//  */
+// function orderReply() {
+//     var ids = getSelectedRows();
+//     if (ids == null) {
+//         return;
+//     }
+//     var orderNos = '';
+//     for (i = 0; i < ids.length; i++) {
+//         var rowData = $("#jqGrid").jqGrid("getRowData", ids[i]);
+//         if (rowData.orderStatus != '已支付') {
+//             orderNos += rowData.orderNo + " ";
+//         }
+//     }
+//     if (orderNos.length > 0 & orderNos.length < 100) {
+//         swal(orderNos + "订单的状态不是支付成功无法执行配货完成操作", {
+//             icon: "error",
+//         });
+//         return;
+//     }
+//     if (orderNos.length >= 100) {
+//         swal("你选择了太多状态不是支付成功的订单，无法执行配货完成操作", {
+//             icon: "error",
+//         });
+//         return;
+//     }
+//     swal({
+//         title: "确认弹框",
+//         text: "确认要执行配货完成操作吗?",
+//         icon: "warning",
+//         buttons: true,
+//         dangerMode: true,
+//     }).then((flag) => {
+//         if (flag) {
+//             $.ajax({
+//                 type: "POST",
+//                 url: "/seller/orders/checkDone",
+//                 contentType: "application/json",
+//                 data: JSON.stringify(ids),
+//                 success: function (r) {
+//                     if (r.resultCode == 200) {
+//                         swal("配货完成", {
+//                             icon: "success",
+//                         });
+//                         $("#jqGrid").trigger("reloadGrid");
+//                     } else {
+//                         swal(r.message, {
+//                             icon: "error",
+//                         });
+//                     }
+//                 }
+//             });
+//         }
+//     }
+// )
+//     ;
+// }
 
 
 function reset() {
