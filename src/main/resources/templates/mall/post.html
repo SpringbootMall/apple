@@ -73,6 +73,12 @@
         var content = document.getElementById("text").value;
         var formData = new FormData();
         formData.append('content', content);
+        if(content == "" || content == null || content == undefined)
+        {swal("请输入帖子内容", {
+            icon: "error",
+        });
+        return;
+        }
         $.ajax({
             type: "POST",
             url: "/add",
@@ -83,7 +89,7 @@
             dataType: "json",
             success:function (result) {
                 if (result) {
-
+                    alert(result);
                     swal({
                         title: "发布成功",
                         text: "确认框",

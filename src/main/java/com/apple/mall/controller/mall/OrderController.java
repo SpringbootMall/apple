@@ -149,14 +149,14 @@ public class OrderController {
         ShopUserComment shopUserComment = new ShopUserComment();
         System.out.println(orderNo);
         Long storeId = goodsService.getNewBeeMallGoodsById(goodsId).getShopId();
-
+        String on = orderNo.toString();
         UserVO user = (UserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         //图片保存名
-        String imgPath = user.getUserId().toString() + "To" + goodsId.toString() + file.getOriginalFilename().substring(file.getOriginalFilename().length()-4);
+        String imgPath = on+"To"+user.getUserId().toString() + "To" + goodsId.toString() + file.getOriginalFilename().substring(file.getOriginalFilename().length()-4);
         String submitImgResult = null;
         try {
             byte[] bytes = file.getBytes();
-            Path path = Paths.get("upload/images/"+imgPath);
+            Path path = Paths.get("src/main/resources/static/mall/image/comment/"+imgPath);
             Files.write(path, bytes);
             shopUserComment.setSubmitImg(path.toString());
             shopUserComment.setOrderNo(orderNo);

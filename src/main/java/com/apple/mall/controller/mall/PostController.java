@@ -29,19 +29,24 @@ public class PostController {
     @RequestMapping("/add")
     public int add(HttpServletRequest request){
         Post post = new Post();
+        int k=0;
         UserVO userVO = new UserVO();
         userVO= ((UserVO) request.getSession().getAttribute("newBeeMallUser"));
         String content =  request.getParameter("content");
-        Date date = new Date();
-        String str = "yyy-MM-dd HH:mm:ss";
-        SimpleDateFormat sdf = new SimpleDateFormat(str);
-        String time = sdf.format(date);
-        post.setPostContent(content);
-        post.setUser(userVO.getNickName());
-        post.setThumbNumber(0);
-        post.setPostTime(time);
-        postService.add(post);
-        return 1;
+        String name = userVO.getNickName();
+        while ((!content.equals(""))&&(!name.equals(""))) {
+            Date date = new Date();
+            String str = "yyy-MM-dd HH:mm:ss";
+            SimpleDateFormat sdf = new SimpleDateFormat(str);
+            String time = sdf.format(date);
+            post.setPostContent(content);
+            post.setUser(name);
+            post.setThumbNumber(0);
+            post.setPostTime(time);
+            postService.add(post);
+            k=1;
+        }
+        return k;
     }
 
     @RequestMapping("/addOne")

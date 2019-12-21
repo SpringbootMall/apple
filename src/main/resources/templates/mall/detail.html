@@ -12,6 +12,10 @@
     td{
         font-weight:bold
     }
+    .a{
+        width: 100px;
+        height: 50px;
+    }
 </style>
 <body>
 <header th:replace="mall/header::header-fragment"></header>
@@ -85,17 +89,21 @@
                <td style="color: #0f73da">用户</td>
                <td style="color: #0f73da">评论</td>
                <td style="color: #0f73da">追评</td>
+               <td style="color: #0f73da">商家回评</td>
                <td style="color: #0f73da">商品打分</td>
                <td style="color: #0f73da">服务打分</td>
                <td style="color: #0f73da">物流打分</td>
+               <td style="color: #0f73da">图片</td>
            </tr>
            <tr th:each="comment:${comments}">
                <td th:text="${comment.userId}"></td>
                <td th:text="${comment.userEvaluation}"></td>
                <td th:text="${comment.addEvaluation}"></td>
+               <td th:text="${comment.storeReply}"></td>
                <td th:text="${comment.goodsScore}"></td>
                <td th:text="${comment.serviceScore}"></td>
                <td th:text="${comment.logisticsScore}"></td>
+               <td><img class="a" alt="暂未上传图片评论" th:src="@{'./mall/image/comment/'+${comment.orderNo}+'To'+${comment.userId}+'To'+${comment.goodsId}+'.jpg'}"></td>
            </tr>
        </table>
    </div>
