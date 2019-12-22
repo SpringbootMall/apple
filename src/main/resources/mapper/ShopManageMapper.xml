@@ -10,15 +10,19 @@
         <result column="shop_owner" jdbcType="VARCHAR" property="shopOwner" />
         <result column="shop_category" jdbcType="VARCHAR" property="shopCategory" />
         <result column="locked_flag" jdbcType="TINYINT" property="lockedFlag"/>
-        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
 
         <result column="shop_creattime" jdbcType="VARCHAR" property="shopCreatTime" />
         <result column="shop_image" jdbcType="VARCHAR" property="shopImage" />
         <result column="shop_intro" jdbcType="VARCHAR" property="shopIntro" />
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+
+        <result column="seller_id" jdbcType="BIGINT" property="sellerId"/>
+        <result column="shop_flag" jdbcType="TINYINT" property="shopFlag"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-    shop_id, shop_name, shop_owner, shop_category, locked_flag, is_deleted, shop_creattime, shop_image, shop_intro
+    shop_id, shop_name, shop_owner, shop_category, locked_flag, is_deleted, shop_creattime, shop_image, shop_intro,
+    seller_id, shop_flag
     </sql>
 
     <select id="findAllMallShopList" parameterType="Map" resultMap="BaseResultMap">
@@ -49,4 +53,12 @@
         select * from shops_info
         where shop_id=#{id, jdbcType=INTEGER}
     </select>
+
+    <update id="lockManageBatch">
+        update shops_info
+        set locked_flag=#{lockStatus} where shop_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
 </mapper>
