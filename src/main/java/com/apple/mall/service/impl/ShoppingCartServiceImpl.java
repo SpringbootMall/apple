@@ -39,7 +39,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         if (temp != null) {
             //已存在则修改该记录
             //todo count = tempCount + 1
-            temp.setGoodsCount(shoppingCartItem.getGoodsCount());
+            temp.setGoodsCount(temp.getGoodsCount()+1);
             return updateNewBeeMallCartItem(temp);
         }
         Goods goods = goodsMapper.selectByPrimaryKey(shoppingCartItem.getGoodsId());
