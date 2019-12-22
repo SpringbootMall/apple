@@ -100,7 +100,7 @@ public class ShopUserComment {
         return goodsScore;
     }
 
-    public void setGoodsScore(int goodsScore) {
+    public void setGoodsScore(Integer goodsScore) {
         this.goodsScore = goodsScore;
     }
 
@@ -108,7 +108,7 @@ public class ShopUserComment {
         return serviceScore;
     }
 
-    public void setServiceScore(int serviceScore) {
+    public void setServiceScore(Integer serviceScore) {
         this.serviceScore = serviceScore;
     }
 
@@ -116,7 +116,7 @@ public class ShopUserComment {
         return logisticsScore;
     }
 
-    public void setLogisticsScore(int logisticsScore) {
+    public void setLogisticsScore(Integer logisticsScore) {
         this.logisticsScore = logisticsScore;
     }
 

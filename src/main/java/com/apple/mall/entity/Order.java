@@ -31,13 +31,13 @@ public class Order {
 
     private String userPhone;
 
-    private int shopId;
+    private Long shopId;
 
-    public int getShopId() {
+    public Long getShopId() {
         return shopId;
     }
 
-    public void setShopId(int shopId) {
+    public void setShopId(Long shopId) {
         this.shopId = shopId;
     }
 

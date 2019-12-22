@@ -155,6 +155,49 @@
     </update>
 
 
+    <update id="updateByPrimaryKeySelectiveImg" parameterType="com.apple.mall.entity.ShopUserComment">
+        update user_comment
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+
+            <if test="commentCreateTime != null">
+                comment_create_time = #{commentCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="commentUpdateTime != null">
+                comment_update_time = #{commentUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userEvaluation != null">
+                user_evaluation = #{userEvaluation,jdbcType=VARCHAR},
+            </if>
+            <if test="addEvaluation != null">
+                add_evaluation = #{addEvaluation,jdbcType=VARCHAR},
+            </if>
+            <if test="submitImg != null">
+                submit_img = #{submitImg,jdbcType=VARCHAR},
+            </if>
+            <if test="commentIsDeleted != null">
+                comment_is_deleted = #{commentIsDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="sellerId != null">
+                seller_id = #{sellerId,jdbcType=BIGINT},
+            </if>
+            <if test="storeId != null">
+                store_id = #{storeId,jdbcType=BIGINT},
+            </if>
+            <if test="storeReply != null">
+                store_reply = #{storeReply,jdbcType=VARCHAR},
+            </if>
+            <if test="replyTime != null">
+                reply_time = #{replyTime,jdbcType=TIMESTAMP},
+            </if>
+
+        </set>
+        where order_no = #{orderNo,jdbcType=BIGINT} and goods_id=#{goodsId,jdbcType=BIGINT}
+    </update>
+
+
     <update id="updateByOrderNo" parameterType="com.apple.mall.entity.ShopUserComment">
         update user_comment
         <set>

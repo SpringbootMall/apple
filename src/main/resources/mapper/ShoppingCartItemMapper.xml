@@ -9,9 +9,10 @@
         <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="shop_id" jdbcType="BIGINT" property="shopId"/>
     </resultMap>
     <sql id="Base_Column_List">
-    cart_item_id, user_id, goods_id, goods_count, is_deleted, create_time, update_time
+    cart_item_id, user_id, goods_id, goods_count, is_deleted, create_time, update_time, shop_id
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
@@ -33,6 +34,15 @@
         where user_id = #{newBeeMallUserId,jdbcType=BIGINT} and is_deleted = 0
         limit #{number}
     </select>
+
+    <select id="selectByUserIdAndShopId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cart_item
+        where user_id = #{newBeeMallUserId,jdbcType=BIGINT} and shop_id = #{shopId,jdbcType=BIGINT} and is_deleted = 0
+        limit #{number}
+    </select>
+
     <select id="selectCountByUserId" resultType="int">
     select
     count(*)
@@ -53,10 +63,10 @@
     <insert id="insert" parameterType="com.apple.mall.entity.ShoppingCartItem">
     insert into cart_item (cart_item_id, user_id, goods_id, 
       goods_count, is_deleted, create_time, 
-      update_time)
+      update_time,shop_id)
     values (#{cartItemId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, 
       #{goodsCount,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+      #{updateTime,jdbcType=TIMESTAMP}, #{shopId,jdbcType=BIGINT})
   </insert>
     <insert id="insertSelective" parameterType="com.apple.mall.entity.ShoppingCartItem">
         insert into cart_item
@@ -82,6 +92,9 @@
             <if test="updateTime != null">
                 update_time,
             </if>
+            <if test="shopId != null">
+                shop_id,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="cartItemId != null">
@@ -104,6 +117,9 @@
             </if>
             <if test="updateTime != null">
                 #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="shopId != null">
+                #{shopId,jdbcType=BIGINT},
             </if>
         </trim>
     </insert>
@@ -128,6 +144,9 @@
             <if test="updateTime != null">
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
+            <if test="shopId != null">
+                shop_id = #{shopId,jdbcType=BIGINT},
+            </if>
         </set>
         where cart_item_id = #{cartItemId,jdbcType=BIGINT}
     </update>
@@ -138,7 +157,8 @@
       goods_count = #{goodsCount,jdbcType=INTEGER},
       is_deleted = #{isDeleted,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      shop_id = #{shopId,jdbcType=BIGINT}
     where cart_item_id = #{cartItemId,jdbcType=BIGINT}
   </update>
 </mapper>

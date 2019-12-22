@@ -209,6 +209,7 @@ public class OrderServiceImpl implements OrderService {
                 order.setOrderNo(orderNo);
                 order.setUserId(user.getUserId());
                 order.setUserAddress(user.getAddress());
+                order.setShopId(myShoppingCartItems.get(0).getShopId());
                 //总价
                 for (ShoppingCartItemVO shoppingCartItemVO : myShoppingCartItems) {
                     priceTotal += shoppingCartItemVO.getGoodsCount() * shoppingCartItemVO.getSellingPrice();

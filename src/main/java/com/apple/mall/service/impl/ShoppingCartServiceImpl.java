@@ -39,7 +39,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         if (temp != null) {
             //已存在则修改该记录
             //todo count = tempCount + 1
-            temp.setGoodsCount(shoppingCartItem.getGoodsCount());
+            temp.setGoodsCount(temp.getGoodsCount()+1);
             return updateNewBeeMallCartItem(temp);
         }
         Goods goods = goodsMapper.selectByPrimaryKey(shoppingCartItem.getGoodsId());
@@ -52,6 +52,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         if (totalItem > Constants.SHOPPING_CART_ITEM_LIMIT_NUMBER) {
             return ServiceResultEnum.SHOPPING_CART_ITEM_LIMIT_NUMBER_ERROR.getResult();
         }
+        shoppingCartItem.setShopId(goods.getShopId());
         //保存记录
         if (shoppingCartItemMapper.insertSelective(shoppingCartItem) > 0) {
             return ServiceResultEnum.SUCCESS.getResult();
@@ -119,6 +120,40 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                     shoppingCartItemVO.setGoodsName(goodsName);
                     shoppingCartItemVO.setShopId(shopId);
                     shoppingCartItemVO.setShopName(shop.getShopName());
+                    shoppingCartItemVO.setSellingPrice(goodsTemp.getSellingPrice());
+                    shoppingCartItemVOS.add(shoppingCartItemVO);
+                }
+            }
+        }
+        return shoppingCartItemVOS;
+    }
+
+    @Override
+    public List<ShoppingCartItemVO> getMyShoppingCartItemsByShopId(Long newBeeMallUserId, Long shopId) {
+        List<ShoppingCartItemVO> shoppingCartItemVOS = new ArrayList<>();
+        List<ShoppingCartItem> shoppingCartItems = shoppingCartItemMapper.selectByUserIdAndShopId(newBeeMallUserId, Constants.SHOPPING_CART_ITEM_TOTAL_NUMBER,shopId);
+        if (!CollectionUtils.isEmpty(shoppingCartItems)) {
+            //查询商品信息并做数据转换
+            List<Long> newBeeMallGoodsIds = shoppingCartItems.stream().map(ShoppingCartItem::getGoodsId).collect(Collectors.toList());
+            List<Goods> goods = goodsMapper.selectByPrimaryKeys(newBeeMallGoodsIds);
+            Map<Long, Goods> newBeeMallGoodsMap = new HashMap<>();
+            if (!CollectionUtils.isEmpty(goods)) {
+                newBeeMallGoodsMap = goods.stream().collect(Collectors.toMap(Goods::getGoodsId, Function.identity(), (entity1, entity2) -> entity1));
+            }
+            for (ShoppingCartItem shoppingCartItem : shoppingCartItems) {
+                ShoppingCartItemVO shoppingCartItemVO = new ShoppingCartItemVO();
+                BeanUtil.copyProperties(shoppingCartItem, shoppingCartItemVO);
+                if (newBeeMallGoodsMap.containsKey(shoppingCartItem.getGoodsId())) {
+                    Goods goodsTemp = newBeeMallGoodsMap.get(shoppingCartItem.getGoodsId());
+                    shoppingCartItemVO.setGoodsCoverImg(goodsTemp.getGoodsCoverImg());
+                    String goodsName = goodsTemp.getGoodsName();
+
+                    // 字符串过长导致文字超出的问题
+                    if (goodsName.length() > 28) {
+                        goodsName = goodsName.substring(0, 28) + "...";
+                    }
+                    shoppingCartItemVO.setGoodsName(goodsName);
+                    shoppingCartItemVO.setShopId(shopId);
                     shoppingCartItemVO.setSellingPrice(goodsTemp.getSellingPrice());
                     shoppingCartItemVOS.add(shoppingCartItemVO);
                 }
