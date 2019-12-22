@@ -61,4 +61,14 @@ public interface UserService {
      */
     Boolean modifyUsersRight(Integer[] ids, int rightStatus);
 
+    /**
+     * 表user_apply
+     * 修改用户申请
+     *
+     * @param ids
+     * @param applyStatus
+     * @return
+     */
+    Boolean modifyUsersApply(Integer[] ids, int applyStatus);
+
 }

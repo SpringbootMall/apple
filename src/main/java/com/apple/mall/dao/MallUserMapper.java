@@ -30,4 +30,6 @@ public interface MallUserMapper {
     int lockUserBatch(@Param("ids") Integer[] ids, @Param("lockStatus") int lockStatus);
 
     int modifyUserRightBatch(@Param("ids") Integer[] ids, @Param("rightStatus") int rightStatus);
+
+    int modifyUserApplyBatch(@Param("ids") Integer[] ids, @Param("applyStatus") int applyStatus);
 }
