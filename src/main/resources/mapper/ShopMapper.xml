@@ -18,7 +18,7 @@
 
     <select id="findshop" resultMap="BaseResultMap">
         select * from shops_info
-        where shop_name like CONCAT('%',#{keyword},'%') or shop_intro like CONCAT('%',#{keyword},'%') or shop_category like CONCAT('%',#{keyword},'%')
+        where shop_flag=1 and (shop_name like CONCAT('%',#{keyword},'%') or shop_intro like CONCAT('%',#{keyword},'%') or shop_category like CONCAT('%',#{keyword},'%'))
     </select>
 
     <select id="shop" resultMap="BaseResultMap">

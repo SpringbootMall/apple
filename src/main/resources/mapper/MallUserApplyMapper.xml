@@ -12,10 +12,10 @@
     <sql id="Base_Column_List">
     user_id, nick_name, login_name, password_md5, introduce_sign, address, is_deleted,
     locked_flag, right_flag, create_time
-  </sql>
-    <sql id="Base_Column_List">
-        apply_user_id, apply_flag, apply_reason, apply_time, apply_is_deleted
     </sql>
+<!--    <sql id="Base_Column_List">-->
+<!--        apply_user_id, apply_flag, apply_reason, apply_time, apply_is_deleted-->
+<!--    </sql>-->
 
 
 
