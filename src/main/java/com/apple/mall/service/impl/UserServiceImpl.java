@@ -100,4 +100,12 @@ public class UserServiceImpl implements UserService {
         }
         return mallUserMapper.modifyUserRightBatch(ids,rightStatus)>0;
     }
+
+    @Override
+    public Boolean modifyUsersApply(Integer[] ids, int applyStatus) {
+        if (ids.length < 1) {
+            return false;
+        }
+        return mallUserMapper.modifyUserApplyBatch(ids,applyStatus)>0;
+    }
 }
