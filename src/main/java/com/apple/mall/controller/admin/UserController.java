@@ -38,6 +38,8 @@ public class UserController {
         return ResultGenerator.genSuccessResult(userService.getNewBeeMallUsersPage(pageUtil));
     }
 
+
+
     /**
      * 用户禁用与解除禁用(0-未锁定 1-已锁定)
      */
@@ -76,22 +78,22 @@ public class UserController {
         }
     }
 
-    /**
-     * 用户类型权限修改 0-会员 1-商家
-     */
-    @RequestMapping(value = "/users/modifyRight/{applyStatus}", method = RequestMethod.POST)
-    @ResponseBody
-    public Result delete2(@RequestBody Integer[] ids, @PathVariable int applyStatus) {
-        if (ids.length < 1) {
-            return ResultGenerator.genFailResult("参数异常！");
-        }
-        if (applyStatus != 0 && applyStatus != 1) {
-            return ResultGenerator.genFailResult("操作非法！");
-        }
-        if (userService.modifyUsersApply(ids, applyStatus)) {
-            return ResultGenerator.genSuccessResult();
-        } else {
-            return ResultGenerator.genFailResult("禁用失败");
-        }
-    }
+//    /**
+//     * 用户申请 0-申请 1-通过 2-拒绝
+//     */
+//    @RequestMapping(value = "/users/modifyRight/{applyStatus}", method = RequestMethod.POST)
+//    @ResponseBody
+//    public Result delete2(@RequestBody Integer[] ids, @PathVariable int applyStatus) {
+//        if (ids.length < 1) {
+//            return ResultGenerator.genFailResult("参数异常！");
+//        }
+//        if (applyStatus != 0 && applyStatus != 1) {
+//            return ResultGenerator.genFailResult("操作非法！");
+//        }
+//        if (userService.modifyUsersApply(ids, applyStatus)) {
+//            return ResultGenerator.genSuccessResult();
+//        } else {
+//            return ResultGenerator.genFailResult("禁用失败");
+//        }
+//    }
 }

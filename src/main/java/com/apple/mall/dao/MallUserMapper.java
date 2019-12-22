@@ -1,6 +1,7 @@
 package com.apple.mall.dao;
 
 import com.apple.mall.entity.MallUser;
+import com.apple.mall.entity.UserApply;
 import com.apple.mall.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Param;
 

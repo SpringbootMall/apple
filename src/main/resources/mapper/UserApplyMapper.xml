@@ -8,9 +8,14 @@
         <id column="apply_user_id" jdbcType="BIGINT" property="applyUserID"/>
         <result column="apply_flag" jdbcType="TINYINT" property="applyFlag"/>
         <result column="apply_reason" jdbcType="VARCHAR" property="applyReason"/>
-        <result column="apply_time" jdbcType="DATE" property="applyTime"/>
-        <result column="apply_is_deleted" jdbcType="TINYINT" property="applyIsDelete"/>
+        <result column="apply_time" jdbcType="TIMESTAMP" property="applyTime"/>
+        <result column="apply_is_deleted" jdbcType="TINYINT" property="applyIsDeleted"/>
     </resultMap>
+
+        <sql id="Base_Column_List">
+            apply_user_id, apply_flag, apply_reason, apply_time, apply_is_deleted
+        </sql>
+
     <insert id="insertUserApply" parameterType="com.apple.mall.entity.UserApply">
         insert into user_apply(
         apply_user_id,apply_reason,apply_time
@@ -19,4 +24,31 @@
         #{applyUserID},#{applyReason},#{applyTime}
         )
     </insert>
+
+    <select id="findUserApplyList" resultMap="BaseResultMap">
+        select *
+        from user_apply
+        order by apply_time desc
+    </select>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select *
+        from user_apply
+    </select>
+
+    <select id="getTotalUserApply"  resultType="int">
+        select count(*) from user_apply
+        where 1=1
+        <if test="applyUserID!=null ">
+            and apply_user_id = #{applyUserID}
+        </if>
+    </select>
+
+    <update id="modifyUserApplyBatch">
+        update user_apply
+        set apply_flag=#{applyStatus} where apply_user_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
 </mapper>
