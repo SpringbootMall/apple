@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mall/header::head-fragment('NewBee商城-搜索','search')">
+    <link th:href="@{/mall/css/bootstrap-modal.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<header th:replace="mall/header::header-fragment"></header>
+<nav th:replace="mall/header::nav-fragment"></nav>
+
+<h1>申请成功,等待管理员审核,等待页面跳转</h1>
+<div>
+    <div th:replace="mall/footer::footer-fragment"></div>
+</div>
+<script>
+    window.setTimeout("window.location='index'",2000);
+</script>
+</body>
+</html>

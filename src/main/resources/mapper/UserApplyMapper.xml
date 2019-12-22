@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.apple.mall.dao.UserApplyMapper">
+
+    <resultMap id="BaseResultMap" type="com.apple.mall.entity.UserApply">
+        <id column="apply_user_id" jdbcType="BIGINT" property="applyUserID"/>
+        <result column="apply_flag" jdbcType="TINYINT" property="applyFlag"/>
+        <result column="apply_reason" jdbcType="VARCHAR" property="applyReason"/>
+        <result column="apply_time" jdbcType="DATE" property="applyTime"/>
+        <result column="apply_is_deleted" jdbcType="TINYINT" property="applyIsDelete"/>
+    </resultMap>
+    <insert id="insertUserApply" parameterType="com.apple.mall.entity.UserApply">
+        insert into user_apply(
+        apply_user_id,apply_reason,apply_time
+        )
+        value (
+        #{applyUserID},#{applyReason},#{applyTime}
+        )
+    </insert>
+</mapper>

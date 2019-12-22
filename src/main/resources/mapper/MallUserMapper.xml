@@ -211,6 +211,7 @@
         </foreach>
     </update>
 
+
     <update id="modifyUserApplyBatch">
         update user_apply
         set apply_flag=#{applyStatus} where apply_user_id in
