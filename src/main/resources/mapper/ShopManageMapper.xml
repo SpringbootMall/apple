@@ -11,7 +11,7 @@
         <result column="shop_category" jdbcType="VARCHAR" property="shopCategory" />
         <result column="locked_flag" jdbcType="TINYINT" property="lockedFlag"/>
 
-        <result column="shop_creattime" jdbcType="VARCHAR" property="shopCreatTime" />
+        <result column="shop_creattime" jdbcType="TIMESTAMP" property="shopCreatTime" />
         <result column="shop_image" jdbcType="VARCHAR" property="shopImage" />
         <result column="shop_intro" jdbcType="VARCHAR" property="shopIntro" />
         <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>

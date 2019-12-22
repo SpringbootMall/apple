@@ -8,7 +8,7 @@ $(function () {
             {label: '店铺主人', name: 'shopOwner', index: 'shopOwner', width: 120},
             {label: '店铺状态', name: 'lockedFlag', index: 'lockedFlag', width: 60, formatter: lockedFormatter},
             {label: '是否注销', name: 'isDeleted', index: 'isDeleted', width: 60, formatter: deletedFormatter},
-            {label: '注册时间', name: 'shopCreateTime', index: 'shopCreateTime', width: 100}
+            {label: '注册时间', name: 'shopCreatTime', index: 'shopCreatTime', width: 100}
             // {label: '修改申请', name: 'modifyInfo', index: 'modifyInfo', width: 80}
         ],
         height: 560,

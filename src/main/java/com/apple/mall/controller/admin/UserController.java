@@ -71,7 +71,7 @@ public class UserController {
         if (rightStatus != 0 && rightStatus != 1) {
             return ResultGenerator.genFailResult("操作非法！");
         }
-        if (userService.modifyUsersRight(ids, rightStatus)) {
+        if (userService.modifyUsersRight(ids, rightStatus) && userService.modifyUsersApply(ids, rightStatus)) {
             return ResultGenerator.genSuccessResult();
         } else {
             return ResultGenerator.genFailResult("禁用失败");

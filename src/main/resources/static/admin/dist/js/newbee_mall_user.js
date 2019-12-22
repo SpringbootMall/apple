@@ -66,6 +66,8 @@ $(function () {
             return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 50%;\">会员</button>";
         } else if (cellvalue == 1) {
             return "<button type=\"button\" class=\"btn btn-block btn-info btn-sm\" style=\"width: 50%;\">商家</button>";
+        } else if(cellvalue >= 2){
+            return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 50%;\">会员</button>";
         }
     }
 

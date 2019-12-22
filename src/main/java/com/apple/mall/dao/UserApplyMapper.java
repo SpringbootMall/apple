@@ -9,6 +9,8 @@ import java.util.List;
 public interface UserApplyMapper {
     void insertUserApply(UserApply userApply);
 
+    UserApply findUserApplyByApplyId(int applyId);
+
     //用户申请商家
     List<UserApply> findUserApplyList(PageQueryUtil pageUtil);
 

@@ -9,7 +9,7 @@
         <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
         <result column="shop_owner" jdbcType="VARCHAR" property="shopOwner" />
         <result column="shop_category" jdbcType="VARCHAR" property="shopCategory" />
-        <result column="shop_creattime" jdbcType="VARCHAR" property="shopCreatTime" />
+        <result column="shop_creattime" jdbcType="TIMESTAMP" property="shopCreatTime" />
         <result column="shop_image" jdbcType="VARCHAR" property="shopImage" />
         <result column="shop_intro" jdbcType="VARCHAR" property="shopIntro" />
         <result column="seller_id" jdbcType="BIGINT" property="sellerId" />
@@ -43,4 +43,35 @@
         #{shopName},#{shopOwner},#{shopCategory},#{shopCreatTime},#{shopImage},#{shopIntro},#{sellerId}
         )
     </insert>
+
+    <select id="findShopList" resultMap="BaseResultMap">
+        select *
+        from shops_info
+        order by shop_creattime desc
+    </select>
+
+    <select id="getTotalShops"  resultType="int">
+        select count(*) from shops_info
+        where 1=1
+        <if test="shopId!=null ">
+            and shop_id = #{shopId}
+        </if>
+    </select>
+
+    <update id="lockShopBatch">
+        update shops_info
+        set locked_flag=#{lockStatus} where shop_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="modifyShopApplyBatch">
+        update shops_info
+        set shop_flag=#{applyStatus} where shop_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
 </mapper>

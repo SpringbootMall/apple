@@ -53,10 +53,39 @@ public class AdminUserApplyController {
         if (applyStatus != 0 && applyStatus != 1 && applyStatus != 2) {
             return ResultGenerator.genFailResult("操作非法！");
         }
-        if (userService.modifyUsersApply(ids, applyStatus)) {
-            return ResultGenerator.genSuccessResult();
-        } else {
-            return ResultGenerator.genFailResult("禁用失败");
+        if(applyStatus == 1){//成为商家
+            System.out.println("执行分路1");
+
+
+            if (userService.modifyUsersApply(ids, applyStatus) && userService.modifyUsersRight(ids, applyStatus)) {
+                //若管理员同意申请，则user_apply表apply_flag置1，user表right_flag置1
+                return ResultGenerator.genSuccessResult();
+            } else {
+                return ResultGenerator.genFailResult("禁用失败");
+            }
+
+//            Integer[] ids1 = ids;
+//            Integer[] ids2 = ids;
+//            int applyStatus1 = applyStatus;
+//            int applyStatus2 = applyStatus;
+//
+//            userService.modifyUsersRight(ids2, applyStatus2);
+//            userService.modifyUsersApply(ids1, applyStatus1);
+//
+//                //若管理员同意申请，则user_apply表apply_flag置1，user表right_flag置1
+//                return ResultGenerator.genSuccessResult();
+
+
         }
+        else {
+            System.out.println("执行分路2");
+            if (userService.modifyUsersApply(ids, applyStatus)) {
+                //若管理员同意申请，则user_apply表apply_flag置1，user表right_flag置1
+                return ResultGenerator.genSuccessResult();
+            } else {
+                return ResultGenerator.genFailResult("禁用失败");
+            }
+        }
+
     }
 }

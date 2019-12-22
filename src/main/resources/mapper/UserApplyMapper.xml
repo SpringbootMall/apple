@@ -10,18 +10,20 @@
         <result column="apply_reason" jdbcType="VARCHAR" property="applyReason"/>
         <result column="apply_time" jdbcType="TIMESTAMP" property="applyTime"/>
         <result column="apply_is_deleted" jdbcType="TINYINT" property="applyIsDeleted"/>
+        <result column="apply_id" jdbcType="INTEGER" property="applyId"/>
     </resultMap>
 
         <sql id="Base_Column_List">
-            apply_user_id, apply_flag, apply_reason, apply_time, apply_is_deleted
+            apply_user_id, apply_flag, apply_reason, apply_time, apply_is_deleted,apply_id
         </sql>
 
-    <insert id="insertUserApply" parameterType="com.apple.mall.entity.UserApply">
+    <insert id="insertUserApply" parameterType="com.apple.mall.entity.UserApply"
+            keyProperty="applyId" useGeneratedKeys="true">
         insert into user_apply(
-        apply_user_id,apply_reason,apply_time
+        apply_user_id,apply_reason,apply_time,apply_id
         )
         value (
-        #{applyUserID},#{applyReason},#{applyTime}
+        #{applyUserID},#{applyReason},#{applyTime},#{applyId}
         )
     </insert>
 
@@ -30,6 +32,10 @@
         from user_apply
         order by apply_time desc
     </select>
+    
+<!--    <select id="findUserApplyByApplyId" parameterType="com.apple.mall.entity.UserApply">-->
+
+<!--    </select>-->
 
     <select id="findAll" resultMap="BaseResultMap">
         select *
@@ -51,4 +57,5 @@
             #{id}
         </foreach>
     </update>
+
 </mapper>

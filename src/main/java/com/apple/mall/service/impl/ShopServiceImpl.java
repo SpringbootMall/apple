@@ -4,6 +4,8 @@ import com.apple.mall.dao.ShopMapper;
 import com.apple.mall.entity.Shop;
 import com.apple.mall.service.ShopManageService;
 import com.apple.mall.service.ShopService;
+import com.apple.mall.util.PageQueryUtil;
+import com.apple.mall.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,4 +42,22 @@ public class ShopServiceImpl implements ShopService {
         shopMapper.insertShop(shop);
         return "开店成功";
     }
+
+    @Override
+    public PageResult getShopApplyPage(PageQueryUtil pageUtil) {
+        List<Shop> shopList = shopMapper.findShopList(pageUtil);
+        int total = shopMapper.getTotalShops(pageUtil);
+        PageResult pageResult = new PageResult(shopList, total, pageUtil.getLimit(), pageUtil.getPage());
+        return pageResult;
+    }
+
+    @Override
+    public Boolean modifyShopsApply(Integer[] ids, int applyStatus) {
+        if (ids.length < 1) {
+            return false;
+        }
+        return shopMapper.modifyShopApplyBatch(ids,applyStatus)>0;
+    }
+
+
 }

@@ -14,6 +14,16 @@ public class UserApply {
 
     Byte applyIsDeleted;
 
+    int applyId;
+
+    public int getApplyId() {
+        return applyId;
+    }
+
+    public void setApplyId(int applyId) {
+        this.applyId = applyId;
+    }
+
     public long getApplyUserID() {
         return applyUserID;
     }

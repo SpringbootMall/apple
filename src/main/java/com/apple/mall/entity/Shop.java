@@ -1,5 +1,9 @@
 package com.apple.mall.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
+
 public class Shop {
 
     private Long shopId;
@@ -14,7 +18,8 @@ public class Shop {
 
     private Byte isDeleted;
 
-    private String shopCreatTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date shopCreatTime;
 
     private String shopImage;
 
@@ -96,11 +101,11 @@ public class Shop {
         this.shopCategory = shopCategory;
     }
 
-    public String getShopCreatTime() {
+    public Date getShopCreatTime() {
         return shopCreatTime;
     }
 
-    public void setShopCreatTime(String shopCreatTime) {
+    public void setShopCreatTime(Date shopCreatTime) {
         this.shopCreatTime = shopCreatTime;
     }
 

@@ -1,13 +1,16 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '/admin/userapply/list1',
+        url: '/admin/shopapply/list',
         datatype: "json",
         colModel: [
-            {label: 'id', name: 'applyUserID', index: 'applyUserID', width: 50, key: true, hidden: true},
-            {label: '用户ID', name: 'applyUserID', index: 'applyUserID', width: 60},
-            {label: '申请成为商家', name: 'applyFlag', index: 'applyFlag', width: 80, formatter: modifyApplyFormatter},
-            {label: '申请理由', name: 'applyReason', index: 'applyReason', width: 120},
-            {label: '申请时间', name: 'applyTime', index: 'applyTime', width: 100}
+            {label: 'id', name: 'shopId', index: 'shopId', width: 50, key: true, hidden: true},
+
+            {label: '店铺名称', name: 'shopName', index: 'shopName', width: 80},
+            {label: '店铺主', name: 'shopOwner', index: 'shopOwner', width: 80},
+            {label: '店铺主ID', name: 'sellerId', index: 'sellerId', width: 80},
+            {label: '店铺类型', name: 'shopCategory', index: 'shopCategory', width: 80},
+            {label: '申请成为商家', name: 'shopFlag', index: 'shopFlag', width: 60, formatter: modifyApplyFormatter},
+            {label: '申请时间', name: 'shopCreatTime', index: 'shopCreatTime', width: 100}
             // {label: '是否注销', name: 'applyIsDeleted', index: 'applyIsDeleted', width: 60, formatter: deletedFormatter}
         ],
         height: 560,
@@ -61,19 +64,19 @@ $(function () {
 
     function modifyApplyFormatter(cellvalue) {
         if (cellvalue == 0) {
-            return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 50%;\">申请商家</button>";
+            return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 80%;\">申请商家</button>";
         } else if (cellvalue == 1) {
-            return "<button type=\"button\" class=\"btn btn-block btn-info btn-sm\" style=\"width: 50%;\">通过申请</button>";
+            return "<button type=\"button\" class=\"btn btn-block btn-info btn-sm\" style=\"width: 80%;\">通过申请</button>";
         } else if (cellvalue == 2) {
-            return "<button type=\"button\" class=\"btn btn-block btn-danger btn-sm\" style=\"width: 50%;\">拒绝申请</button>";
+            return "<button type=\"button\" class=\"btn btn-block btn-danger btn-sm\" style=\"width: 80%;\">拒绝申请</button>";
         }
     }
 
     function deletedFormatter(cellvalue) {
         if (cellvalue == 0) {
-            return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 50%;\">正常</button>";
+            return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 80%;\">正常</button>";
         } else if (cellvalue >= 1) {
-            return "<button type=\"button\" class=\"btn btn-block btn-secondary btn-sm\" style=\"width: 50%;\">注销</button>";
+            return "<button type=\"button\" class=\"btn btn-block btn-secondary btn-sm\" style=\"width: 80%;\">注销</button>";
         }
     }
 });
@@ -131,7 +134,7 @@ function reload() {
 //     ;
 // }
 
-function modifyApplyUser(applyStatus) {
+function modifyApplyShop(applyStatus) {
     var ids = getSelectedRows();
     if (ids == null) {
         return;
@@ -151,7 +154,7 @@ function modifyApplyUser(applyStatus) {
         if (flag) {
             $.ajax({
                 type: "POST",
-                url: "/admin/userapply/modifyApply/" + applyStatus,
+                url: "/admin/shopapply/modifyApply/" + applyStatus,
                 contentType: "application/json",
                 data: JSON.stringify(ids),
                 success: function (r) {
