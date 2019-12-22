@@ -75,4 +75,23 @@ public class UserController {
             return ResultGenerator.genFailResult("禁用失败");
         }
     }
+
+    /**
+     * 用户类型权限修改 0-会员 1-商家
+     */
+    @RequestMapping(value = "/users/modifyRight/{applyStatus}", method = RequestMethod.POST)
+    @ResponseBody
+    public Result delete2(@RequestBody Integer[] ids, @PathVariable int applyStatus) {
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        if (applyStatus != 0 && applyStatus != 1) {
+            return ResultGenerator.genFailResult("操作非法！");
+        }
+        if (userService.modifyUsersApply(ids, applyStatus)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult("禁用失败");
+        }
+    }
 }
