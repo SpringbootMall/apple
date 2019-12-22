@@ -50,7 +50,10 @@ public class MallMvcConfigurer implements WebMvcConfigurer {
                 .addPathPatterns("/selectPayType")
                 .addPathPatterns("/payPage")
                 .addPathPatterns("/seller")
-                .addPathPatterns("/seller/**") ;
+                .addPathPatterns("/seller/**")
+                .addPathPatterns("/becomeSeller")
+                .addPathPatterns("/seller")
+        ;
     }
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
