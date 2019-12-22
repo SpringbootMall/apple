@@ -9,8 +9,8 @@ $(function () {
             {label: '用户类型', name: 'rightFlag', index: 'rightFlag', width: 60, formatter: modifyRightFormatter},
             {label: '身份状态', name: 'lockedFlag', index: 'lockedFlag', width: 60, formatter: lockedFormatter},
             {label: '是否注销', name: 'isDeleted', index: 'isDeleted', width: 60, formatter: deletedFormatter},
-            {label: '注册时间', name: 'createTime', index: 'createTime', width: 100},
-            {label: '修改申请', name: 'modifyInfo', index: 'modifyInfo', width: 80}
+            {label: '注册时间', name: 'createTime', index: 'createTime', width: 100}
+            // {label: '修改申请', name: 'modifyInfo', index: 'modifyInfo', width: 80}
         ],
         height: 560,
         rowNum: 10,

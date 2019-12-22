@@ -8,8 +8,8 @@ $(function () {
             {label: '店铺主人', name: 'shopOwner', index: 'shopOwner', width: 120},
             {label: '店铺状态', name: 'lockedFlag', index: 'lockedFlag', width: 60, formatter: lockedFormatter},
             {label: '是否注销', name: 'isDeleted', index: 'isDeleted', width: 60, formatter: deletedFormatter},
-            {label: '注册时间', name: 'shopCreateTime', index: 'shopCreateTime', width: 100},
-            {label: '修改申请', name: 'modifyInfo', index: 'modifyInfo', width: 80}
+            {label: '注册时间', name: 'shopCreateTime', index: 'shopCreateTime', width: 100}
+            // {label: '修改申请', name: 'modifyInfo', index: 'modifyInfo', width: 80}
         ],
         height: 560,
         rowNum: 10,
@@ -88,47 +88,47 @@ function reload() {
 }
 
 
-// function lockShop(lockStatus) {
-//     var ids = getSelectedRows();
-//     if (ids == null) {
-//         return;
-//     }
-//     if (lockStatus != 0 && lockStatus != 1 && lockStatus != 2) {
-//         swal('非法操作', {
-//             icon: "error",
-//         });
-//     }
-//     swal({
-//         title: "确认弹框",
-//         text: "确认要修改账号状态吗?",
-//         icon: "warning",
-//         buttons: true,
-//         dangerMode: true,
-//     }).then((flag) => {
-//             if (flag) {
-//                 $.ajax({
-//                     type: "POST",
-//                     url: "/admin/shops/lock/" + lockStatus,
-//                     contentType: "application/json",
-//                     data: JSON.stringify(ids),
-//                     success: function (r) {
-//                         if (r.resultCode == 200) {
-//                             swal("操作成功", {
-//                                 icon: "success",
-//                             });
-//                             $("#jqGrid").trigger("reloadGrid");
-//                         } else {
-//                             swal(r.message, {
-//                                 icon: "error",
-//                             });
-//                         }
-//                     }
-//                 });
-//             }
-//         }
-//     )
-//     ;
-// }
+function lockShop(lockStatus) {
+    var ids = getSelectedRows();
+    if (ids == null) {
+        return;
+    }
+    if (lockStatus != 0 && lockStatus != 1 && lockStatus != 2) {
+        swal('非法操作', {
+            icon: "error",
+        });
+    }
+    swal({
+        title: "确认弹框",
+        text: "确认要修改账号状态吗?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((flag) => {
+            if (flag) {
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/shops/lock/" + lockStatus,
+                    contentType: "application/json",
+                    data: JSON.stringify(ids),
+                    success: function (r) {
+                        if (r.resultCode == 200) {
+                            swal("操作成功", {
+                                icon: "success",
+                            });
+                            $("#jqGrid").trigger("reloadGrid");
+                        } else {
+                            swal(r.message, {
+                                icon: "error",
+                            });
+                        }
+                    }
+                });
+            }
+        }
+    )
+    ;
+}
 
 // function modifyRightShop(rightStatus) {
 //     var ids = getSelectedRows();
