@@ -65,9 +65,8 @@
                 </del>
             </div>
 
-            <th:block th:if="${session.newBeeMallUser==null}">
-                <input type="hidden" id="savesession" value="1">
-            </th:block>
+                <input type="hidden" id="savesession" th:value="${session.newBeeMallUser}">
+
                 <div class="order">
                 <a class="car" th:href="@{/shop(id=${goodsDetail.shopId})}">进店逛逛</a>
                 <input class="car" type="button" th:onclick="'saveAndGoCart('+${goodsDetail.goodsId}+')'" value="立即选购"/>
@@ -107,6 +106,7 @@
                <td style="color: #0f73da">服务打分</td>
                <td style="color: #0f73da">物流打分</td>
                <td style="color: #0f73da">图片</td>
+               <td style="color: #0f73da">评价时间</td>
            </tr>
            <tr th:each="comment:${comments}">
                <td th:text="${comment.userId}"></td>
@@ -117,6 +117,7 @@
                <td th:text="${comment.serviceScore}"></td>
                <td th:text="${comment.logisticsScore}"></td>
                <td><img class="a" alt="暂未上传图片评论" th:src="@{'./mall/image/comment/'+${comment.orderNo}+'To'+${comment.userId}+'To'+${comment.goodsId}+'.jpg'}"></td>
+               <td th:text="${comment.commentCreateTime}"></td>
            </tr>
        </table>
    </div>
@@ -134,7 +135,7 @@
      */
     function saveToCart(id) {
         var judge = document.getElementById("savesession").value;
-        if (judge==1){
+        if (judge==''){
             swal({
                 title: "请先登录！",
                 text: "确认框",
@@ -187,7 +188,7 @@
      */
     function saveAndGoCart(id) {
         var judge = document.getElementById("savesession").value;
-        if (judge==1){
+        if (judge==''){
             swal({
                 title: "请先登录！",
                 text: "确认框",

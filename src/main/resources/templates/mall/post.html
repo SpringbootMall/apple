@@ -49,9 +49,7 @@
     </th:block>
 </div>
 </div>
-<th:block th:if="${session.newBeeMallUser==null}">
-    <input type="hidden" id="savesession" value="1">
-</th:block>
+<input type="hidden" id="savesession" th:value="${session.newBeeMallUser}">
 <div th:replace="mall/footer::footer-fragment"></div>
 <script>
     function a(id) {
@@ -85,7 +83,7 @@
 <script>
     function qwe() {
         var judge = document.getElementById("savesession").value;
-        if (judge==='1'||judge==1){
+        if (judge==''){
             window.location.href = '/login';
         }
         var content = document.getElementById("text").value;
