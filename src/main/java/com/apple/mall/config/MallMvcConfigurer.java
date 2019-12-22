@@ -52,7 +52,7 @@ public class MallMvcConfigurer implements WebMvcConfigurer {
                 .addPathPatterns("/seller")
                 .addPathPatterns("/seller/**")
                 .addPathPatterns("/becomeSeller")
-                .addPathPatterns("/seller")
+                .addPathPatterns("/seller")///////////加个注释了解一下
         ;
     }
 
