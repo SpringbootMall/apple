@@ -55,7 +55,10 @@
                 </del>
             </div>
 
-            <div class="order">
+            <th:block th:if="${session.newBeeMallUser==null}">
+                <input type="hidden" id="savesession" value="1">
+            </th:block>
+                <div class="order">
                 <a class="car" th:href="@{/shop(id=${goodsDetail.shopId})}">进店逛逛</a>
                 <input class="car" type="button" th:onclick="'saveAndGoCart('+${goodsDetail.goodsId}+')'" value="立即选购"/>
                 <input class="car" type="button" th:onclick="'saveToCart('+${goodsDetail.goodsId}+')'" value="加入购物车"/>
@@ -120,6 +123,18 @@
      * 添加到购物车
      */
     function saveToCart(id) {
+        var judge = document.getElementById("savesession").value;
+        if (judge==1){
+            swal({
+                title: "请先登录！",
+                text: "确认框",
+                icon: "error",
+                buttons: true,
+                dangerMode: true,
+            }).then((flag) => {
+                window.location.href = '/shop-cart';
+        });
+        }
         var goodsCount = 1;
         var data = {
             "goodsId": id,
@@ -142,7 +157,8 @@
                             window.location.reload();
                         }
                     );
-                } else {
+                }
+                else {
                     swal(result.message, {
                         icon: "error",
                     });
@@ -160,6 +176,18 @@
      * 添加到购物车并跳转至购物车页面
      */
     function saveAndGoCart(id) {
+        var judge = document.getElementById("savesession").value;
+        if (judge==1){
+            swal({
+                title: "请先登录！",
+                text: "确认框",
+                icon: "error",
+                buttons: true,
+                dangerMode: true,
+            }).then((flag) => {
+                window.location.href = '/shop-cart';
+        });
+        }
         var goodsCount = 1;
         var data = {
             "goodsId": id,

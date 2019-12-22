@@ -35,9 +35,9 @@ import java.util.Map;
 public class OrderController {
 
     @Resource
-    private ShoppingCartService newBeeMallShoppingCartService;
+    private ShoppingCartService mallShoppingCartService;
     @Resource
-    private OrderService newBeeMallOrderService;
+    private OrderService mallOrderService;
     @Resource
     private ShopUserCommentService shopUserCommentService;
     @Resource
@@ -46,7 +46,7 @@ public class OrderController {
     @GetMapping("/orders/{orderNo}")
     public String orderDetailPage(HttpServletRequest request, @PathVariable("orderNo") String orderNo, HttpSession httpSession) {
         UserVO user = (UserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        OrderDetailVO orderDetailVO = newBeeMallOrderService.getOrderDetailByOrderNo(orderNo, user.getUserId());
+        OrderDetailVO orderDetailVO = mallOrderService.getOrderDetailByOrderNo(orderNo, user.getUserId());
         List<ShopUserComment> userOrderComment = shopUserCommentService.getShopUserCommentByOrderNo(Long.valueOf(orderNo));
         if (orderDetailVO == null) {
             return "error/error_5xx";
@@ -67,7 +67,7 @@ public class OrderController {
         params.put("limit", Constants.ORDER_SEARCH_PAGE_LIMIT);
         //封装我的订单数据
         PageQueryUtil pageUtil = new PageQueryUtil(params);
-        request.setAttribute("orderPageResult", newBeeMallOrderService.getMyOrders(pageUtil));
+        request.setAttribute("orderPageResult", mallOrderService.getMyOrders(pageUtil));
         request.setAttribute("path", "orders");
         return "mall/my-orders";
     }
@@ -77,7 +77,7 @@ public class OrderController {
         System.out.println(shopId);
         UserVO user = (UserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         Long shopIdTemp = Long.valueOf(shopId);
-        List<ShoppingCartItemVO> myShoppingCartItems = newBeeMallShoppingCartService.getMyShoppingCartItemsByShopId(user.getUserId(),shopIdTemp);
+        List<ShoppingCartItemVO> myShoppingCartItems = mallShoppingCartService.getMyShoppingCartItemsByShopId(user.getUserId(),shopIdTemp);
         if (StringUtils.isEmpty(user.getAddress().trim())) {
             //无收货地址
             Exception.fail(ServiceResultEnum.NULL_ADDRESS_ERROR.getResult());
@@ -87,7 +87,7 @@ public class OrderController {
             Exception.fail(ServiceResultEnum.SHOPPING_ITEM_ERROR.getResult());
         }
         //保存订单并返回订单号
-        String saveOrderResult = newBeeMallOrderService.saveOrder(user, myShoppingCartItems);
+        String saveOrderResult = mallOrderService.saveOrder(user, myShoppingCartItems);
         //跳转到订单详情页
         return "redirect:/orders/" + saveOrderResult;
     }
@@ -96,7 +96,7 @@ public class OrderController {
     @ResponseBody
     public Result cancelOrder(@PathVariable("orderNo") String orderNo, HttpSession httpSession) {
         UserVO user = (UserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        String cancelOrderResult = newBeeMallOrderService.cancelOrder(orderNo, user.getUserId());
+        String cancelOrderResult = mallOrderService.cancelOrder(orderNo, user.getUserId());
         if (ServiceResultEnum.SUCCESS.getResult().equals(cancelOrderResult)) {
             return ResultGenerator.genSuccessResult();
         } else {
@@ -108,7 +108,7 @@ public class OrderController {
     @ResponseBody
     public Result finishOrder(@PathVariable("orderNo") String orderNo, HttpSession httpSession) {
         UserVO user = (UserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        String finishOrderResult = newBeeMallOrderService.finishOrder(orderNo, user.getUserId());
+        String finishOrderResult = mallOrderService.finishOrder(orderNo, user.getUserId());
         if (ServiceResultEnum.SUCCESS.getResult().equals(finishOrderResult)) {
             return ResultGenerator.genSuccessResult();
         } else {
@@ -175,7 +175,7 @@ public class OrderController {
     @GetMapping("/selectPayType")
     public String selectPayType(HttpServletRequest request, @RequestParam("orderNo") String orderNo, HttpSession httpSession) {
         UserVO user = (UserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        Order newBeeMallOrder = newBeeMallOrderService.getOrderByOrderNo(orderNo);
+        Order newBeeMallOrder = mallOrderService.getOrderByOrderNo(orderNo);
         //todo 判断订单userId
         //todo 判断订单状态
         request.setAttribute("orderNo", orderNo);
@@ -186,7 +186,7 @@ public class OrderController {
     @GetMapping("/payPage")
     public String payOrder(HttpServletRequest request, @RequestParam("orderNo") String orderNo, HttpSession httpSession, @RequestParam("payType") int payType) {
         UserVO user = (UserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        Order newBeeMallOrder = newBeeMallOrderService.getOrderByOrderNo(orderNo);
+        Order newBeeMallOrder = mallOrderService.getOrderByOrderNo(orderNo);
         //todo 判断订单userId
         //todo 判断订单状态
         request.setAttribute("orderNo", orderNo);
@@ -201,7 +201,7 @@ public class OrderController {
     @GetMapping("/paySuccess")
     @ResponseBody
     public Result paySuccess(@RequestParam("orderNo") String orderNo, @RequestParam("payType") int payType) {
-        String payResult = newBeeMallOrderService.paySuccess(orderNo, payType);
+        String payResult = mallOrderService.paySuccess(orderNo, payType);
         if (ServiceResultEnum.SUCCESS.getResult().equals(payResult)) {
             return ResultGenerator.genSuccessResult();
         } else {

@@ -29,6 +29,9 @@ public class ShoppingCartController {
     public String cartListPage(HttpServletRequest request,
                                HttpSession httpSession) {
         UserVO user = (UserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        if(user == null){
+            return "mall/login";
+        }
         int itemsTotal = 0;
         int priceTotal = 0;
         List<ShoppingCartItemVO> myShoppingCartItems = shoppingCartService.getMyShoppingCartItems(user.getUserId());
@@ -57,6 +60,7 @@ public class ShoppingCartController {
     public Result saveNewBeeMallShoppingCartItem(@RequestBody ShoppingCartItem shoppingCartItem,
                                                  HttpSession httpSession) {
         UserVO user = (UserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+
         shoppingCartItem.setUserId(user.getUserId());
         //todo 判断数量
         String saveResult = shoppingCartService.saveNewBeeMallCartItem(shoppingCartItem);
