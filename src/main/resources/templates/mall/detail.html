@@ -16,6 +16,18 @@
         width: 100px;
         height: 50px;
     }
+    button {
+        background: #008EAD;
+        border: 1px solid #008EaF;
+        color: #fff;
+        border-radius: 5px;
+        font-weight: bold;
+        padding: 10px 15px;
+        cursor: pointer;
+    }
+    button:hover{
+        background: #694530;
+    }
 </style>
 <body>
 <header th:replace="mall/header::header-fragment"></header>
@@ -28,11 +40,9 @@
         <div class="content w">
             <div class="title fl">商品详情</div>
             <nav class="fr">
-                <li><a href="##">概述</a></li>
-                <li>|</li>
-                <li><a href="##">详情</a></li>
-                <li>|</li>
-                <li><a href="##">用户评价</a></li>
+                <div th:if="${session.keyword}!=null" >
+                    <button ><a style="font-size: 25px;font-weight: 700;color: white" th:href="@{/search(keyword=${session.keyword})}">继续购物</a></button>
+                </div>
                 <div class="clear"></div>
             </nav>
             <div class="clear"></div>

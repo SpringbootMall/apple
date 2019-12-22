@@ -17,6 +17,14 @@ public interface UserService {
     PageResult getNewBeeMallUsersPage(PageQueryUtil pageUtil);
 
     /**
+     * 后台分页--用户申请商家
+     *
+     * @param pageUtil
+     * @return
+     */
+    PageResult getUserApplyPage(PageQueryUtil pageUtil);
+
+    /**
      * 用户注册
      *
      * @param loginName

@@ -4,7 +4,9 @@ import com.apple.mall.common.Constants;
 import com.apple.mall.common.ServiceResultEnum;
 import com.apple.mall.controller.vo.UserVO;
 import com.apple.mall.dao.MallUserMapper;
+import com.apple.mall.dao.UserApplyMapper;
 import com.apple.mall.entity.MallUser;
+import com.apple.mall.entity.UserApply;
 import com.apple.mall.service.UserService;
 import com.apple.mall.util.BeanUtil;
 import com.apple.mall.util.MD5Util;
@@ -21,12 +23,27 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private MallUserMapper mallUserMapper;
+    @Autowired
+    private UserApplyMapper userApplyMapper;
 
     @Override
     public PageResult getNewBeeMallUsersPage(PageQueryUtil pageUtil) {
         List<MallUser> mallUsers = mallUserMapper.findMallUserList(pageUtil);
         int total = mallUserMapper.getTotalMallUsers(pageUtil);
         PageResult pageResult = new PageResult(mallUsers, total, pageUtil.getLimit(), pageUtil.getPage());
+        return pageResult;
+    }
+
+
+    @Override
+    public PageResult getUserApplyPage(PageQueryUtil pageUtil) {
+        List<UserApply> userApplyList = userApplyMapper.findUserApplyList(pageUtil);
+//        List<UserApply> userApplyList = userApplyMapper.findUserApplyList();
+        System.out.println("userApplyList:");
+        System.out.println(userApplyList.toString());
+        int total = userApplyMapper.getTotalUserApply(pageUtil);
+//        int total = userApplyMapper.getTotalUserApply();
+        PageResult pageResult = new PageResult(userApplyList, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
     }
 
@@ -106,6 +123,6 @@ public class UserServiceImpl implements UserService {
         if (ids.length < 1) {
             return false;
         }
-        return mallUserMapper.modifyUserApplyBatch(ids,applyStatus)>0;
+        return userApplyMapper.modifyUserApplyBatch(ids,applyStatus)>0;
     }
 }

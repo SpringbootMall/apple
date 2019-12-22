@@ -1,12 +1,17 @@
 package com.apple.mall.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class UserApply {
     long applyUserID;
     Byte applyFlag;
     String applyReason;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     Date applyTime;
+
     Byte applyIsDeleted;
 
     public long getApplyUserID() {
