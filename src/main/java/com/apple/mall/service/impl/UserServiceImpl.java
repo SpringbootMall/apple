@@ -91,6 +91,7 @@ public class UserServiceImpl implements UserService {
             user.setNickName(mallUser.getNickName());
             user.setAddress(mallUser.getAddress());
             user.setIntroduceSign(mallUser.getIntroduceSign());
+            user.setPasswordMd5( MD5Util.MD5Encode(mallUser.getPasswordMd5(), "UTF-8"));
             if (mallUserMapper.updateByPrimaryKeySelective(user) > 0) {
                 UserVO userVO = new UserVO();
                 user = mallUserMapper.selectByPrimaryKey(mallUser.getUserId());
