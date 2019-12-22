@@ -13,8 +13,8 @@
         <result column="shop_image" jdbcType="VARCHAR" property="shopImage" />
         <result column="shop_intro" jdbcType="VARCHAR" property="shopIntro" />
         <result column="seller_id" jdbcType="BIGINT" property="sellerId" />
+        <result column="shop_flag" jdbcType="TINYINT" property="shopFlag"/>
     </resultMap>
-
 
     <select id="findshop" resultMap="BaseResultMap">
         select * from shops_info
@@ -26,8 +26,21 @@
         where shop_id=#{id jdbcType=INTEGER}
     </select>
 
+    <select id="findShopByName" resultMap="BaseResultMap">
+        select * from shops_info
+        where shop_name=#{shopName jdbcType=VARCHAR}
+    </select>
+
     <select id="FindAllShopsWithSellerId" resultMap="BaseResultMap">
         select * from shops_info
         where seller_id=#{sellerId jdbcType=BIGINT}
     </select>
+    <insert id="insertShop" parameterType="com.apple.mall.entity.Shop">
+        insert into shops_info(
+        shop_name,shop_owner,shop_category,shop_creattime,shop_image,shop_intro,seller_id
+        )
+        value (
+        #{shopName},#{shopOwner},#{shopCategory},#{shopCreatTime},#{shopImage},#{shopIntro},#{sellerId}
+        )
+    </insert>
 </mapper>

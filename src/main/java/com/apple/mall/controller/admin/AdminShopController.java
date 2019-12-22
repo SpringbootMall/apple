@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
-public class ShopController {
+public class AdminShopController {
 
     @Resource
     private ShopManageService shopManageService;

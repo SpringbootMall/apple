@@ -14,5 +14,5 @@ public interface ShopService {
 
    List<Shop> FindAllShopsWithSellerId(long sellerId);
 
-
+    String register(Shop shop);
 }

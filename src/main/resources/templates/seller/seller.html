@@ -19,6 +19,7 @@
            style="color:#1baeae;margin-left: 600px;">
             申请开店
         </a>
+
     </div>
 </div>
 <!--<div id="personal">-->
@@ -69,7 +70,7 @@
 <div class="goods_item center">
     <div class="main center">
         <th:block th:each="shop : ${shops}">
-            <div class="item_card_frame">
+            <div class="item_card_frame" th:if="${shop.getShopFlag()} == 1">
                 <div class="item_card"><a th:href="@{/seller/goods(shopId=${shop.shopId})}" target="_blank">
                     <img th:src="@{${shop.shopImage}}" th:alt="${shop.shopName}"></a></div>
                 <div class="item_brand"><a th:href="@{/seller/goods(shopId=${shop.shopId})}" target="_blank"

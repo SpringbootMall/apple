@@ -20,13 +20,23 @@ public class Shop {
 
     private String shopIntro;
 
-    private int sellerId;
+    private long sellerId;
 
-    public int getSellerId() {
+    public byte getShopFlag() {
+        return shopFlag;
+    }
+
+    public void setShopFlag(byte shopFlag) {
+        this.shopFlag = shopFlag;
+    }
+
+    private byte shopFlag;
+
+    public long getSellerId() {
         return sellerId;
     }
 
-    public void setSellerId(int sellerId) {
+    public void setSellerId(long sellerId) {
         this.sellerId = sellerId;
     }
 
