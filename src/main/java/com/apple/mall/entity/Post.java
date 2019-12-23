@@ -42,4 +42,11 @@ public class Post {
         this.thumbNumber = thumbNumber;
     }
 
+    public Date getPostTime() {
+        return postTime;
+    }
+
+    public void setPostTime(Date postTime) {
+        this.postTime = postTime;
+    }
 }
