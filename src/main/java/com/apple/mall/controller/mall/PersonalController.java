@@ -117,7 +117,7 @@ public class PersonalController {
     @PostMapping("/personal/updateInfo")
     @ResponseBody
     public Result updateInfo(@RequestBody MallUser mallUser, HttpSession httpSession) {
-        if (mallUser.getPasswordMd5()=="" ||mallUser.getPasswordMd5().length()<6){
+        if (mallUser.getPasswordMd5()==""||mallUser.getPasswordMd5()==null ||mallUser.getPasswordMd5().length()<6){
             mallUser.setPasswordMd5(null);
         }
         UserVO mallUserTemp = userService.updateUserInfo(mallUser,httpSession);

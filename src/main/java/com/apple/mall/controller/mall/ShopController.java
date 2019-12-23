@@ -43,8 +43,8 @@ public class ShopController {
         shop.setSellerId(userVO.getUserId());
         shop.setShopOwner(userVO.getNickName());
 
-//        Date date = new Date();
-//        shop.setShopCreatTime(date.toString());
+        Date date = new Date();
+        shop.setShopCreatTime(date);
 //
 //        File path2 = new File(ResourceUtils.getURL("classpath:static").getPath().replace("%20"," ").replace('/', '\\'));
 //        if(!path2.exists()) path2 = new File("");

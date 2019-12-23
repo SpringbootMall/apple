@@ -36,9 +36,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public String register(Shop shop){
-        if(shopMapper.findShopByName(shop.getShopName())!=null){
-            return "店铺名重复";
-        }
+
         shopMapper.insertShop(shop);
         return "开店成功";
     }

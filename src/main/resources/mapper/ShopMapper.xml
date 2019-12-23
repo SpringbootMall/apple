@@ -14,11 +14,12 @@
         <result column="shop_intro" jdbcType="VARCHAR" property="shopIntro" />
         <result column="seller_id" jdbcType="BIGINT" property="sellerId" />
         <result column="shop_flag" jdbcType="TINYINT" property="shopFlag"/>
+        <result column="locked_flag" jdbcType="TINYINT" property="lockedFlag"/>
     </resultMap>
 
     <select id="findshop" resultMap="BaseResultMap">
         select * from shops_info
-        where shop_flag=1 and (shop_name like CONCAT('%',#{keyword},'%') or shop_intro like CONCAT('%',#{keyword},'%') or shop_category like CONCAT('%',#{keyword},'%'))
+        where locked_flag=0 and (shop_name like CONCAT('%',#{keyword},'%') or shop_intro like CONCAT('%',#{keyword},'%') or shop_category like CONCAT('%',#{keyword},'%'))
     </select>
 
     <select id="shop" resultMap="BaseResultMap">
