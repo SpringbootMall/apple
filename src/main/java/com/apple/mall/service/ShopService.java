@@ -13,7 +13,7 @@ public interface ShopService {
 
     List<Shop> findShop(String shopName);
 
-    Shop shop(Long id);
+    Shop findShopById(Long id);
 
    List<Shop> FindAllShopsWithSellerId(long sellerId);
 
