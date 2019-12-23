@@ -18,7 +18,7 @@ public class ShopServiceImpl implements ShopService {
     ShopMapper shopMapper;
 
     @Override
-    public List<Shop> findshop(String shopName){
+    public List<Shop> findShop(String shopName){
 
         return shopMapper.findshop(shopName);
     }

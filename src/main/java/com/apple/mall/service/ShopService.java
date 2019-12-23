@@ -11,7 +11,7 @@ import java.util.List;
 public interface ShopService {
 
 
-    List<Shop> findshop(String shopName);
+    List<Shop> findShop(String shopName);
 
     Shop shop(Long id);
 
