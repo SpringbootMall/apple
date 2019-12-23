@@ -1,12 +1,14 @@
 package com.apple.mall.entity;
 
+import java.util.Date;
+
 public class Post {
 
     private int postId;
     private String user;
     private String postContent;
     private int thumbNumber;
-    private String postTime;
+    private Date postTime;
 
     public int getPostId() {
         return postId;
@@ -40,11 +42,4 @@ public class Post {
         this.thumbNumber = thumbNumber;
     }
 
-    public String getPostTime() {
-        return postTime;
-    }
-
-    public void setPostTime(String postTime) {
-        this.postTime = postTime;
-    }
 }
