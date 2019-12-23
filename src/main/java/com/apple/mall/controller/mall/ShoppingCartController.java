@@ -74,7 +74,7 @@ public class ShoppingCartController {
 
     @PutMapping("/shop-cart")
     @ResponseBody
-    public Result updateNewBeeMallShoppingCartItem(@RequestBody ShoppingCartItem shoppingCartItem,
+    public Result updateShoppingCartItem(@RequestBody ShoppingCartItem shoppingCartItem,
                                                    HttpSession httpSession) {
         UserVO user = (UserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         shoppingCartItem.setUserId(user.getUserId());
@@ -88,12 +88,12 @@ public class ShoppingCartController {
         return ResultGenerator.genFailResult(saveResult);
     }
 
-    @DeleteMapping("/shop-cart/{newBeeMallShoppingCartItemId}")
+    @DeleteMapping("/shop-cart/{mallShoppingCartItemId}")
     @ResponseBody
-    public Result updateNewBeeMallShoppingCartItem(@PathVariable("newBeeMallShoppingCartItemId") Long newBeeMallShoppingCartItemId,
+    public Result updateShoppingCartItem(@PathVariable("mallShoppingCartItemId") Long mallShoppingCartItemId,
                                                    HttpSession httpSession) {
         UserVO user = (UserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        Boolean deleteResult = shoppingCartService.deleteById(newBeeMallShoppingCartItemId);
+        Boolean deleteResult = shoppingCartService.deleteById(mallShoppingCartItemId);
         //删除成功
         if (deleteResult) {
             return ResultGenerator.genSuccessResult();
@@ -121,32 +121,8 @@ public class ShoppingCartController {
             //无数据则不跳转至结算页
             return "/shop-cart";
         } else {
-
-//            for (ShoppingCartItemVO shoppingCartItemVO : myShoppingCartItems) {
-//                //获取所有店铺id和商店名
-//
-//                Long shopId = shoppingCartItemVO.getShopId();
-//                String shopName = shoppingCartItemVO.getShopName();
-//                if (!shopIds.contains(shopId)) {shopIds.add(shopId); n++;}
-//                if (!shopNames.contains(shopName)) shopNames.add(shopName);
-//
-//
-//                //一家店的总价
-//                priceInOneShop[n-1] += shoppingCartItemVO.getGoodsCount() * shoppingCartItemVO.getSellingPrice();
-//                priceTotal += shoppingCartItemVO.getGoodsCount() * shoppingCartItemVO.getSellingPrice();
-//            }
-//            for (int i =0;i<shopIds.size();i++){
-//                BuyInOneShopVO buyInOneShopVO = new BuyInOneShopVO();
-//                buyInOneShopVO.setPrice(priceInOneShop[i]);
-//                buyInOneShopVO.setShopId(shopIds.get(i));
-//                buyInOneShopVO.setShopName(shopNames.get(i));
-//                buyInOneShopVOList.add(buyInOneShopVO);
-//            }
-
             //第一次遍历获取订单中所有商家（BuyInOneShopVO）
-            Long shopId = myShoppingCartItems.get(0).getShopId();
             BuyInOneShopVO buyFirst = new BuyInOneShopVO();
-
 
             int price = myShoppingCartItems.get(0).getSellingPrice();
             int num = myShoppingCartItems.get(0).getGoodsCount();
@@ -156,18 +132,14 @@ public class ShoppingCartController {
             buyFirst.setShopName(myShoppingCartItems.get(0).getShopName());
             buyInOneShopVOList.add(buyFirst);
             for(ShoppingCartItemVO shoppingCartItemVO : myShoppingCartItems) {
-
                     BuyInOneShopVO temp = new BuyInOneShopVO();
                     temp.setShopId(shoppingCartItemVO.getShopId());
-
                     //插入唯一
                     if(!buyInOneShopVOList.contains(temp)){
-
                         int price1 = shoppingCartItemVO.getSellingPrice();
                         int num1 = shoppingCartItemVO.getGoodsCount();
                         int sum1 = price1*num1;
                         temp.setPrice(sum1);
-
                         temp.setShopName(shoppingCartItemVO.getShopName());
                         buyInOneShopVOList.add(temp);
                     }
@@ -188,16 +160,8 @@ public class ShoppingCartController {
                 buyInOneShopVOList.get(i).setPrice(sum2);
                 buyInOneShopVOList.get(i).setShoppingCartItemVOs(shoppingCartItemVOList);
             }
-
-
-
-//            if (priceTotal < 1) {
-//                return "error/error_5xx";
-//            }
         }
         request.setAttribute("buyInOneShopVOList",buyInOneShopVOList);
-        //request.setAttribute("priceTotal", priceTotal);
-        //request.setAttribute("myShoppingCartItems", myShoppingCartItems);
         for (int i =0;i<buyInOneShopVOList.size();i++){
             System.out.println(buyInOneShopVOList.get(i).toString());
         }
