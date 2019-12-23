@@ -90,7 +90,7 @@
     where order_no = #{orderNo,jdbcType=BIGINT}
     </delete>
 
-    <insert id="insert" parameterType="com.apple.mall.entity.ShopUserComment">
+    <insert id="insert" parameterType="BaseResultMap">
     insert into user_comment (order_no, goods_id, user_id,
     comment_create_time, comment_update_time,user_evaluation, add_evaluation, goods_score, service_score,
     logistics_score, submit_img, comment_is_deleted, seller_id,store_id,store_reply,reply_time)
@@ -103,7 +103,7 @@
       #{replyTime,jdbcType=TIMESTAMP})
     </insert>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.apple.mall.entity.ShopUserComment">
+    <update id="updateByPrimaryKeySelective" parameterType="BaseResultMap">
         update user_comment
         <set>
             <if test="userId != null">
@@ -155,7 +155,7 @@
     </update>
 
 
-    <update id="updateByPrimaryKeySelectiveImg" parameterType="com.apple.mall.entity.ShopUserComment">
+    <update id="updateByPrimaryKeySelectiveImg" parameterType="BaseResultMap">
         update user_comment
         <set>
             <if test="userId != null">
